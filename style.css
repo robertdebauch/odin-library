@@ -17,13 +17,22 @@ header {
     padding: 2rem;
     /* width: 1440px; */
 
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+header .logo {
+    width: auto;
+    font-size: 3rem;
+    font-weight: 500;
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 3rem;
+    letter-spacing: 100px;
+    text-transform: uppercase;
+    margin: 0 1rem;
+    text-align: center;
 }
 
 header p {
