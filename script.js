@@ -36,82 +36,60 @@ addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Sing
 
 /* elements in DOM */
 
-const getAuthorName = function (author) {
-    const author_name = document.createTextNode(author);
-    return author_name;
+const createElement = (element) => {
+    return document.createElement(element);
 }
 
-const getTitleName = function (title) {
-    const title_name = document.createTextNode(title);
-    return title_name;
+const createText = (text) => {
+    return document.createTextNode(text);
 }
 
-const getGenreText = function (genre) {
-    const genre_text = document.createTextNode(genre);
-    return genre_text;
+function createBookEntry() {
+    const bookEntry = createElement('div');
+    bookEntry.classList.add('book-entry');
+    return bookEntry;
 }
 
-const getNumberOfPages = function (pages) {
-    const number_of_pages = document.createTextNode(pages);
-    return number_of_pages;
+const createAuthorElement = (author) => {
+    const authorName = createText(author)
+    const authorElement = createElement('p');
+    authorElement.append(authorName);
+    authorElement.classList.add('book', 'author');
+    return authorElement;
 }
 
-const createAuthorInfo = (authorText) => {
-    const author = document.createElement('p');
-    author.append(getAuthorName(authorText));
-    return author;
+const createTitleElement = (title) => {
+    const titleName = createText(title)
+    const titleElement = createElement('h3');
+    titleElement.append(titleName);
+    titleElement.classList.add('book', 'title');
+    return titleElement;
 }
 
-const createTitleInfo = (titleText) => {
-    const title = document.createElement('h3');
-    title.append(getTitleName(titleText));
-    return title;
+const createGenreElement = (genre) => {
+    const genreName = createText(genre);
+    const genreElement = createElement('div');
+    genreElement.append(genreName);
+    genreElement.classList.add('book', 'genre');
+    return genreElement;
 }
 
-const createGenreInfo = (genreText) => {
-    const genre = document.createElement('div');
-    genre.append(getGenreText(genreText));
-    return genre;
-}
-
-const createPagesInfo = (pagesText) => {
-    const pages = document.createElement('div');
-    pages.append(getNumberOfPages(pagesText));
-    return pages;
-}
-
-const getAuthorElement = (element) => {
-    const author = createAuthorInfo(element)
-    author.classList.add('book', 'author')
-    return author;
-}
-
-const getTitleElement = (element) => {
-    const title = createTitleInfo(element);
-    title.classList.add('book', 'title');
-    return title;
-}
-
-const getGenreElement = (element) => {
-    const genre = createGenreInfo(element)
-    genre.classList.add('book', 'genre')
-    return genre;
-}
-
-const getPagesElement = (element) => {
-    const pages = createPagesInfo(element);
-    pages.classList.add('book', 'pages');
-    return pages;
+const createPagesElement = (pages) => {
+    const numberOfPages = createText(`pages: ${pages}`);
+    const pagesElement = createElement('div');
+    pagesElement.append(numberOfPages);
+    pagesElement.classList.add('book', 'pages');
+    return pagesElement;
 }
 
 const getReadStatus = function (status) {
-    const readStatus = document.createTextNode(status);
+    const readStatus = createText(status);
     return readStatus;
 }
 
 const createReadStatus = (status_text) => {
-    const readStatus = document.createElement('div');
-    readStatus.append(getGenreText(status_text));
+    const readStatus = createElement('div');
+    readStatus.append(getReadStatus(status_text));
     return readStatus;
 }
 
@@ -120,6 +98,7 @@ const getStatusElement = (element) => {
     readStatus.classList.add('readStatus');
     return readStatus;
 }
+
 
 /* just for visual diffenence : random color */
 
@@ -135,48 +114,76 @@ function appendRandomColor(color, element) {
     element.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
 }
 
-/* main function starting here : */
-
-const bookShelf = document.querySelector(".bookshelf");
-console.log(bookShelf);
-
-function createBook(titleInfo, authorInfo, genreInfo, pagesInfo, statusInfo) {
-
-    const bookEntry = document.createElement('div');
-    bookEntry.classList.add('book-entry');
-
-    bookShelf.append(bookEntry);
-
-    const readStatus = getStatusElement(statusInfo);
-    bookEntry.append(readStatus);
-
-    const frame = document.createElement('div');
+function createFrame() {
+    const frame = createElement('div');
     frame.classList.add('frame');
-    const picture = document.createElement('div');
+    return frame;
+}
+
+function createPicture() {
+    const picture = createElement('div');
     picture.classList.add('picture');
     const cover = generateRandomColor();
     appendRandomColor(cover, picture);
+    return picture;
+}
+
+function createBookInfo() {
+    const bookInfo = createElement('div');
+    bookInfo.classList.add('bookinfo');
+    return bookInfo;
+}
+
+function createPrimaryInfo() {
+    const primaryInfo = createElement('div');
+    primaryInfo.classList.add('primary-info');
+    return primaryInfo;
+}
+
+function createSeecondaryInfo() {
+    const secondaryInfo = createElement('div');
+    secondaryInfo.classList.add('secondary-info');
+    return secondaryInfo;
+}
+
+/* main function here : */
+
+const bookShelf = document.querySelector(".bookshelf");
+
+function createBook(book) {
+
+    console.log(book);
+    const bookEntry = createBookEntry();
+
+
+    const frame = createFrame();
+    const picture = createPicture();
+
+    const bookInfo = createBookInfo();
+
+    const secondaryInfo = createSeecondaryInfo();
+    const primaryInfo = createPrimaryInfo();
+
+    const author = createAuthorElement(book.author);
+    const title = createTitleElement(book.title);
+    const genre = createGenreElement(book.genre);
+    const pages = createPagesElement(book.pages);
+    
+    const readStatus = getStatusElement(book.info());
+    if (book.read) {
+        readStatus.classList.add('completed')
+    }
+
+    bookShelf.append(bookEntry);
+    bookEntry.append(readStatus);
 
     frame.append(picture);
     bookEntry.append(frame);
 
-    const bookInfo = document.createElement('div');
-    bookInfo.classList.add('bookinfo');
     bookEntry.append(bookInfo);
-
-    const primaryInfo = document.createElement('div');
-    primaryInfo.classList.add('primary-info');
-
-    const secondaryInfo = document.createElement('div');
-    secondaryInfo.classList.add('secondary-info');
 
     bookInfo.append(primaryInfo);
     bookInfo.insertBefore(secondaryInfo, primaryInfo);
-
-    const author = getAuthorElement(titleInfo);
-    const title = getTitleElement(authorInfo);
-    const genre = getGenreElement(genreInfo);
-    const pages = getPagesElement(pagesInfo);
 
     primaryInfo.append(title);
     primaryInfo.append(author);
@@ -187,7 +194,8 @@ function createBook(titleInfo, authorInfo, genreInfo, pagesInfo, statusInfo) {
 
 function showBooks(array) {
     array.forEach((book) => {
-        createBook(book.author, book.title, book.genre, book.pages, book.info()); 
+        createBook(book); 
+        console.log(Object.getPrototypeOf(book));
     });
 }
 
