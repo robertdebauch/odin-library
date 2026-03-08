@@ -14,34 +14,57 @@
 </head>
 
 <body>
+
     <header>
-        <div class="logo">L</div>
-        <div class="logo">I</div>
-        <div class="logo">B</div>
-        <div class="logo">R</div>
-        <div class="logo">A</div>
-        <div class="logo">R</div>
-        <div class="logo">Y</div>
+        <div class="logo">
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+        </div>
+        <h1 class="letters">LIBRARY</h1>
+        <button class="new-book">New Book</button>
     </header>
+    <dialog id="dialog" closedby="any">
+        <div id="close" class="close-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>close</title>
+                <path
+                    d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+            </svg>
+        </div>
+        <form id="add-book" action="" method="dialog">
+            <h2>Enter the book details:</h2>
+            <div>
+                <label for="title">Book Title</label>
+                <input type="text" name="title" id="title" placeholder="Entropy and Art" required>
+            </div>
+            <div>
+                <label for="author">Book Author</label>
+                <input type="text" name="author" id="author" placeholder="Rudolf Arnheim" required>
+            </div>
+            <div>
+                <label for="genre">Book Genre</label>
+                <input type="text" name="genre" id="genre" placeholder="Psychology" required>
+            </div>
+            <div>
+                <label for="pages">Number of Pages</label>
+                <input type="number" name="pages" id="pages" placeholder="320" required>
+            </div>
+            <div>
+                <input type="checkbox" name="read" id="read" >
+                <label for="read">Have you read this book?</label>
+            </div>
+            <div>
+                <button id="add" type="submit">Add Book</button>
+            </div>
+        </form>
+    </dialog>
     <div class="bookshelf">
-        <!-- <div class="book-entry">
-            <div class="readStatus">not read yet</div>
-            <div class="frame">
-                <div class="picture"></div>
-            </div>
-            <div class="bookinfo">
-                <div class="secondary-info">
-                    <div class="book genre">genre</div>
-                    <div class="book pages">pages: 32</div>
-                </div>
-                <div class="primary-info">
-                    <h3 class="book title">Poetry Seeing #1</h3>
-                    <p class="book author">Takahiro Kurashima</p>
-                </div>
-            </div>
-        </div> -->
     </div>
 </body>
 <script src="script.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/rampensau/dist/rampensau.min.js"></script> -->
+
 </html>

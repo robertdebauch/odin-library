@@ -168,7 +168,7 @@ function createBook(book) {
     const title = createTitleElement(book.title);
     const genre = createGenreElement(book.genre);
     const pages = createPagesElement(book.pages);
-    
+
     const readStatus = getStatusElement(book.info());
     if (book.read) {
         readStatus.classList.add('completed')
@@ -194,9 +194,68 @@ function createBook(book) {
 
 function showBooks(array) {
     array.forEach((book) => {
-        createBook(book); 
-        console.log(Object.getPrototypeOf(book));
+        createBook(book);
     });
 }
 
 showBooks(myLibrary);
+
+/* */
+
+const newBookButton = document.querySelector('.new-book');
+const dialog = document.querySelector("#dialog");
+console.log(dialog);
+
+const closeButton = document.querySelector('#close>svg');
+console.log(closeButton);
+
+newBookButton.addEventListener('click', () => {
+    if (newBookButton.textContent === "I'm working") {
+        return newBookButton.textContent = 'New Book';
+    } else {
+        newBookButton.textContent = "I'm working";
+    }
+});
+
+newBookButton.addEventListener("click", () => {
+    dialog.showModal();
+});
+
+closeButton.addEventListener("click", () => {
+    dialog.close();
+})
+
+const addBookForm = document.querySelector('#add-book');
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+    console.log('Adding book...');
+
+    const formData = new FormData(event.target);
+
+
+    const genre = formData.get('genre');
+    const title = formData.get('title');
+    const author = formData.get('author');
+    const pages = parseInt(formData.get('pages'));
+    const read = !!formData.get('read');
+
+    const newBookObject = Object.fromEntries(formData.entries());
+
+
+    console.log(newBookObject);
+
+    console.log(title);
+    console.log(author);
+    console.log(genre);
+    console.log(pages);
+    console.log(read);
+
+    addBookToLibrary(crypto.randomUUID(), genre, title, author, pages, read);
+    bookShelf.innerHTML = '';
+    showBooks(myLibrary);
+    alert('book addded');
+    dialog.close();
+}
+
+addBookForm.addEventListener('submit', handleFormSubmit);
