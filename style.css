@@ -5,6 +5,7 @@
     --stroke-color: hsl(0, 0%, 57%);
     --frame-color: hsl(24, 15%, 94%);
     --small-text: hsl(0, 0%, 44%);
+    --success-color: hsl(164, 70%, 24%);
 }
 
 body {
@@ -110,8 +111,8 @@ button.new-book:hover {
 }
 
 .completed {
-    --badge-text-color: #12664F;
-    --stroke-color: #12664F;
+    --badge-text-color: var(--success-color);
+    --stroke-color: var(--success-color);
     border-radius: .5rem !important;
 }
 
@@ -122,7 +123,7 @@ button.new-book:hover {
     height: 1rem;
     margin-top: 4px;
     margin-right: .25rem;
-    background: #12664F;
+    background: var(--success-color);
     mask: url('assets/check.svg') no-repeat center !important;
     -webkit-mask: url('assets/check.svg') no-repeat center !important;
     mask-size: cover;
@@ -130,7 +131,7 @@ button.new-book:hover {
 }
 
 .completed:hover {
-    --bg-color: #12664F;
+    --bg-color: var(--success-color);
     --badge-text-color: #ffffff;
     background-color: var(--bg-color);
 }
@@ -264,4 +265,62 @@ form #add {
     color: var(--bg-color);
     border: none;
     padding: .5rem 1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.message {
+    background-color: var(--success-color);
+    color: var(--bg-color);
+    padding: 2rem;
+    margin: 2rem 2rem 0 2rem;
+
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 1rem;
+
+    opacity: 0;
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+}
+
+.message .pseudo-icon {
+    background-color: var(--bg-color);
+    width: 2rem;
+    height: 2rem;
+    mask: url('assets/book-open-variant.svg') no-repeat center !important;
+    -webkit-mask: url('assets/book-open-variant.svg') no-repeat center !important;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    margin-bottom: .25rem;
+}
+
+.message.fadeOut {
+    opacity: 1;
+    animation-name: fadeOut;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
 }

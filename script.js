@@ -82,21 +82,12 @@ const createPagesElement = (pages) => {
     return pagesElement;
 }
 
-const getReadStatus = function (status) {
-    const readStatus = createText(status);
-    return readStatus;
-}
-
-const createReadStatus = (status_text) => {
-    const readStatus = createElement('div');
-    readStatus.append(getReadStatus(status_text));
-    return readStatus;
-}
-
-const getStatusElement = (element) => {
-    const readStatus = createReadStatus(element);
-    readStatus.classList.add('readStatus');
-    return readStatus;
+const createReadStatusElement = (readStatus) => {
+    const readStatusText = createText(readStatus);
+    const readStatusElement = createElement('div');
+    readStatusElement.append(readStatusText);
+    readStatusElement.classList.add('readStatus');
+    return readStatusElement;
 }
 
 
@@ -169,7 +160,7 @@ function createBook(book) {
     const genre = createGenreElement(book.genre);
     const pages = createPagesElement(book.pages);
 
-    const readStatus = getStatusElement(book.info());
+    const readStatus = createReadStatusElement(book.info());
     if (book.read) {
         readStatus.classList.add('completed')
     }
@@ -193,29 +184,21 @@ function createBook(book) {
 
 
 function showBooks(array) {
-    array.forEach((book) => {
+    const reversedList = array.toReversed();
+    reversedList.forEach((book) => {
         createBook(book);
     });
 }
 
+/* adding some books at the start for visual clue */
 showBooks(myLibrary);
 
 /* */
 
 const newBookButton = document.querySelector('.new-book');
 const dialog = document.querySelector("#dialog");
-console.log(dialog);
 
 const closeButton = document.querySelector('#close>svg');
-console.log(closeButton);
-
-newBookButton.addEventListener('click', () => {
-    if (newBookButton.textContent === "I'm working") {
-        return newBookButton.textContent = 'New Book';
-    } else {
-        newBookButton.textContent = "I'm working";
-    }
-});
 
 newBookButton.addEventListener("click", () => {
     dialog.showModal();
@@ -225,14 +208,47 @@ closeButton.addEventListener("click", () => {
     dialog.close();
 })
 
-const addBookForm = document.querySelector('#add-book');
+const addBookForm = document.querySelector('#add-book'); /* add book button inside form */
+addBookForm.addEventListener('submit', handleFormSubmit); /* important for learning */
+
+
+
+const showSuccessMessage = () => {
+
+    const message = createElement('div');
+    const messageText = createText('Your book was successfully added to the Library');
+    const bookIconContainer = createElement('div');
+
+
+    message.classList.add('message');
+    message.append(messageText);
+
+    bookIconContainer.classList.add('pseudo-icon');
+    message.insertBefore(bookIconContainer, messageText);
+
+    document.body.insertBefore(message, bookShelf);
+
+    addBookForm.reset();
+
+    setTimeout(() => {
+        message.classList.add('fadeOut');
+
+        setTimeout(() => {
+            if (message.parentNode) {
+                message.parentNode.removeChild(message);
+            }
+        }, 300)
+    }, 3000);
+    
+    // it's jumps, i should revisit it.
+}
+
 
 function handleFormSubmit(event) {
     event.preventDefault();
     console.log('Adding book...');
 
     const formData = new FormData(event.target);
-
 
     const genre = formData.get('genre');
     const title = formData.get('title');
@@ -242,9 +258,7 @@ function handleFormSubmit(event) {
 
     const newBookObject = Object.fromEntries(formData.entries());
 
-
     console.log(newBookObject);
-
     console.log(title);
     console.log(author);
     console.log(genre);
@@ -252,10 +266,10 @@ function handleFormSubmit(event) {
     console.log(read);
 
     addBookToLibrary(crypto.randomUUID(), genre, title, author, pages, read);
-    bookShelf.innerHTML = '';
+    bookShelf.innerHTML = ''; /* delete existing books to avoid duplicates */
     showBooks(myLibrary);
-    alert('book addded');
-    dialog.close();
-}
 
-addBookForm.addEventListener('submit', handleFormSubmit);
+    dialog.close();
+
+    showSuccessMessage();
+}
