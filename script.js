@@ -82,6 +82,18 @@ const createPagesElement = (pages) => {
     return pagesElement;
 }
 
+const createBookUI = () => {
+    const bookUI = createElement('div');
+    bookUI.classList.add('book-ui');
+    return bookUI;
+}
+
+const createStatusUI = () => {
+    const statusUI = createElement('div');
+    statusUI.classList.add('status-ui');
+    return statusUI;
+}
+
 const createReadStatusElement = (readStatus) => {
     const readStatusText = createText(readStatus);
     const readStatusElement = createElement('div');
@@ -89,6 +101,19 @@ const createReadStatusElement = (readStatus) => {
     readStatusElement.classList.add('readStatus');
     return readStatusElement;
 }
+
+const createStatusButton = () => {
+    const statusButton = createElement('div');
+    statusButton.classList.add('changeStatus');
+    return statusButton;
+}
+
+const createDeleteButton = () => {
+    const deleteButton = createElement('div');
+    deleteButton.classList.add('deleteBook')
+    return deleteButton;
+}
+
 
 
 /* just for visual diffenence : random color */
@@ -131,11 +156,33 @@ function createPrimaryInfo() {
     return primaryInfo;
 }
 
-function createSeecondaryInfo() {
+function createSecondaryInfo() {
     const secondaryInfo = createElement('div');
     secondaryInfo.classList.add('secondary-info');
     return secondaryInfo;
 }
+
+const createSvgIcon = (design) => {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const boxWidth = 24;
+    const boxHeight = 24;
+    
+    const coords = design;
+
+    const svgIcon = document.createElementNS(svgNS, "svg");
+    svgIcon.setAttributeNS(null, "viewBox", "0 0 " + boxWidth + " " + boxHeight);
+    svgIcon.setAttributeNS(null, "width", boxWidth);
+    svgIcon.setAttributeNS(null, "height", boxHeight);
+    svgIcon.style.display = "block";
+
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttributeNS(null, 'd', coords);
+
+    svgIcon.appendChild(path);
+    return svgIcon;
+}
+
+
 
 /* main function here : */
 
@@ -145,14 +192,15 @@ function createBook(book) {
 
     console.log(book);
     const bookEntry = createBookEntry();
-
+    const bookUI = createBookUI();
+    const statusUI = createStatusUI();
 
     const frame = createFrame();
     const picture = createPicture();
 
     const bookInfo = createBookInfo();
 
-    const secondaryInfo = createSeecondaryInfo();
+    const secondaryInfo = createSecondaryInfo();
     const primaryInfo = createPrimaryInfo();
 
     const author = createAuthorElement(book.author);
@@ -165,8 +213,23 @@ function createBook(book) {
         readStatus.classList.add('completed')
     }
 
+    const statusButton = createStatusButton();
+    const deleteButton = createDeleteButton();
+
+    const changeStatusIcon =  createSvgIcon("M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z");
+    statusButton.append(changeStatusIcon);
+
+    const deleteIcon = createSvgIcon("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
+    deleteButton.append(deleteIcon);
+
     bookShelf.append(bookEntry);
-    bookEntry.append(readStatus);
+    bookEntry.append(bookUI);
+    bookUI.append(statusUI);
+    statusUI.append(readStatus);
+    statusUI.append(statusButton);
+    bookUI.append(deleteButton);
+
+    // bookEntry.append(readStatus);
 
     frame.append(picture);
     bookEntry.append(frame);

@@ -6,6 +6,7 @@
     --frame-color: hsl(24, 15%, 94%);
     --small-text: hsl(0, 0%, 44%);
     --success-color: hsl(164, 70%, 24%);
+    --danger-color: hsl(352, 93%, 53%);
 }
 
 body {
@@ -71,7 +72,7 @@ button.new-book {
     flex: 1;
     max-width: 16rem;
 
-    transition: all 0.3s ease-in;
+    /* transition: all 0.3s ease-in; */
 }
 
 button.new-book:hover {
@@ -90,15 +91,48 @@ button.new-book:hover {
 
 .book-entry {
     position: relative;
-    min-height: 576px;
+    min-height: 576px; /* ? */
     display: grid;
     grid-template-rows: 474px 1fr;
     /* not ideal */
     gap: 1rem;
 }
 
-.book-entry .readStatus {
+.book-ui {
     position: absolute;
+    top: 1rem;
+    padding: 0 3rem 0 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book-ui .status-ui {
+    display: flex;
+    gap: .5rem
+}
+
+.deleteBook, .changeStatus {
+    background-color: var(--bg-color);
+    padding: .25rem;
+    border: 1px solid var(--stroke-color);
+    border-radius: 0.25rem;
+}
+
+.deleteBook > svg, .changeStatus > svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.deleteBook:hover , .changeStatus:hover {
+    background: var(--danger-color);
+    fill: var(--bg-color);
+    border: var(--text-color);
+}
+
+.book-entry .readStatus {
+    /* position: absolute; */
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--stroke-color);
     border-radius: 0.25rem;
@@ -107,7 +141,7 @@ button.new-book:hover {
     display: flex;
     align-self: start;
     justify-self: center;
-    top: 1rem;
+    /* top: 1rem; */
 }
 
 .completed {
