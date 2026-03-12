@@ -319,7 +319,7 @@ form #add {
   }
 }
 
-.message {
+.success-message, .delete-message {
     background-color: var(--success-color);
     color: var(--bg-color);
     padding: 2rem;
@@ -340,7 +340,7 @@ form #add {
     animation-fill-mode: forwards;
 }
 
-.message .pseudo-icon {
+.success-message .pseudo-icon {
     background-color: var(--bg-color);
     width: 2rem;
     height: 2rem;
@@ -351,10 +351,51 @@ form #add {
     margin-bottom: .25rem;
 }
 
-.message.fadeOut {
+.delete-message {
+    background-color: var(--danger-color);
+}
+
+.delete-message .pseudo-icon {
+    background-color: var(--text-color);
+    width: 3rem;
+    height: 3rem;
+    mask: url('assets/delete.svg') no-repeat center !important;
+    -webkit-mask: url('assets/delete.svg') no-repeat center !important;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    margin-bottom: .25rem;
+}
+
+.success-message.fadeOut,
+.delete-message.fadeOut {
     opacity: 1;
     animation-name: fadeOut;
     animation-duration: 0.3s;
     animation-timing-function: ease-out;
     animation-fill-mode: backwards;
+}
+
+.delete-message > div {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+}
+
+.delete-message div {
+    font-size: 1rem;
+    color: black;
+}
+
+.delete-message .title-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.delete-message .author-text {
+    font-size: 1.5rem;
+    color: var(--bg-color);
+    border: 1px solid var(--text-color);
+    background-color: var(--text-color);
+    padding: .25rem 1rem;
+    border-radius: .25rem;
 }

@@ -34,6 +34,7 @@ addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert
 addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
 addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Single Viewer', 400, false);
 
+
 /* elements in DOM */
 
 const createElement = (element) => {
@@ -166,7 +167,7 @@ const createSvgIcon = (design) => {
     const svgNS = "http://www.w3.org/2000/svg";
     const boxWidth = 24;
     const boxHeight = 24;
-    
+
     const coords = design;
 
     const svgIcon = document.createElementNS(svgNS, "svg");
@@ -182,7 +183,88 @@ const createSvgIcon = (design) => {
     return svgIcon;
 }
 
+function showMessage(message) {
+    return message;
+}
 
+function showDeleteMessage(book) {
+    const message = createElement('div');
+    const titleName = createText(`${book.title}`);
+    const authorName = createText(`${book.author}`);
+    const titleContainer = createElement('div');
+    const authorContainer = createElement('div');
+
+    titleContainer.classList.add('title-text');
+    authorContainer.classList.add('author-text');
+    
+    const messageContainer = createElement('div');
+    const messageTextStart = createText(`by`);
+    const messageTextEnd = createText(`was deleted`);
+    // messageText.classList.add('message-text');
+
+    titleContainer.append(titleName);
+    authorContainer.append(authorName);
+
+    messageContainer.append(titleContainer);
+    messageContainer.append(messageTextStart);
+    messageContainer.append(authorContainer);
+    messageContainer.append(messageTextEnd);
+
+
+    // const messageText = createText(`[${book.title}] by {${book.author}} was deleted`);
+    const bookIconContainer = createElement('div');
+
+
+    message.classList.add('delete-message');
+    message.append(messageContainer);
+
+    bookIconContainer.classList.add('pseudo-icon');
+    message.insertBefore(bookIconContainer, messageContainer);
+
+    document.body.insertBefore(message, bookShelf);
+
+    addBookForm.reset();
+
+    setTimeout(() => {
+        message.classList.add('fadeOut');
+
+        setTimeout(() => {
+            if (message.parentNode) {
+                message.parentNode.removeChild(message);
+            }
+        }, 300)
+    }, 3000);
+}
+
+function showSuccessMessage() {
+
+    const message = createElement('div');
+    const messageText = createText('Your book was successfully added to the Library');
+    const bookIconContainer = createElement('div');
+
+
+    message.classList.add('success-message');
+    message.append(messageText);
+
+    bookIconContainer.classList.add('pseudo-icon');
+    message.insertBefore(bookIconContainer, messageText);
+
+    document.body.insertBefore(message, bookShelf);
+
+    addBookForm.reset();
+
+    setTimeout(() => {
+        message.classList.add('fadeOut');
+
+        setTimeout(() => {
+            if (message.parentNode) {
+                message.parentNode.removeChild(message);
+            }
+        }, 300)
+    }, 3000);
+
+    // it's jumps, i should revisit it.
+}
 
 /* main function here : */
 
@@ -192,6 +274,8 @@ function createBook(book) {
 
     console.log(book);
     const bookEntry = createBookEntry();
+    bookEntry.setAttribute('data-id', book.id);
+
     const bookUI = createBookUI();
     const statusUI = createStatusUI();
 
@@ -216,11 +300,26 @@ function createBook(book) {
     const statusButton = createStatusButton();
     const deleteButton = createDeleteButton();
 
-    const changeStatusIcon =  createSvgIcon("M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z");
+    const changeStatusIcon = createSvgIcon("M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z");
     statusButton.append(changeStatusIcon);
 
     const deleteIcon = createSvgIcon("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
     deleteButton.append(deleteIcon);
+
+    deleteButton.addEventListener('click', () => {
+
+        if (window.confirm("Are you sure you want to delete this book?")) {
+        const indexToRemove = myLibrary.findIndex((bookItem) => bookItem.id = book.id);
+        if (indexToRemove !== -1) {
+            myLibrary.splice(indexToRemove, 1);
+        }
+        
+        showMessage(showDeleteMessage(book));
+        bookEntry.remove();
+        } else {
+            console.log('Something here, but what?')
+        }
+    })
 
     bookShelf.append(bookEntry);
     bookEntry.append(bookUI);
@@ -228,8 +327,6 @@ function createBook(book) {
     statusUI.append(readStatus);
     statusUI.append(statusButton);
     bookUI.append(deleteButton);
-
-    // bookEntry.append(readStatus);
 
     frame.append(picture);
     bookEntry.append(frame);
@@ -276,36 +373,6 @@ addBookForm.addEventListener('submit', handleFormSubmit); /* important for learn
 
 
 
-const showSuccessMessage = () => {
-
-    const message = createElement('div');
-    const messageText = createText('Your book was successfully added to the Library');
-    const bookIconContainer = createElement('div');
-
-
-    message.classList.add('message');
-    message.append(messageText);
-
-    bookIconContainer.classList.add('pseudo-icon');
-    message.insertBefore(bookIconContainer, messageText);
-
-    document.body.insertBefore(message, bookShelf);
-
-    addBookForm.reset();
-
-    setTimeout(() => {
-        message.classList.add('fadeOut');
-
-        setTimeout(() => {
-            if (message.parentNode) {
-                message.parentNode.removeChild(message);
-            }
-        }, 300)
-    }, 3000);
-    
-    // it's jumps, i should revisit it.
-}
-
 
 function handleFormSubmit(event) {
     event.preventDefault();
@@ -334,5 +401,6 @@ function handleFormSubmit(event) {
 
     dialog.close();
 
-    showSuccessMessage();
+    // showSuccessMessage();
+    showMessage(showSuccessMessage());
 }
