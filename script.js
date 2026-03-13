@@ -1,5 +1,7 @@
 const myLibrary = [];
 
+/* constructor */
+
 function Book(id, genre, title, author, pages, read) {
     if (!new.target) {
         throw Error("You must use the new operator to call the constructor");
@@ -11,16 +13,25 @@ function Book(id, genre, title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function () {
-        let readStatus;
-        if (this.read === true) {
-            readStatus = 'completed';
-        } else {
-            readStatus = 'not read yet';
-        }
-        return readStatus;
-    }
 }
+
+/* method on prototype of Book */
+
+Book.prototype.info = function () {
+    let readStatus;
+    if (this.read === true) {
+        readStatus = 'completed';
+    } else {
+        readStatus = 'not read yet';
+    }
+    return readStatus;
+}
+
+Book.prototype.toggleReadStatus = function () {
+    this.read = !this.read;
+}
+
+/* get random id */
 
 let id = crypto.randomUUID();
 
@@ -29,6 +40,8 @@ function addBookToLibrary(id, genre, title, author, pages, read) {
     const book = new Book(id, genre, title, author, pages, read);
     myLibrary.push(book);
 }
+
+/* build few starters books */
 
 addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert Debauch', 200, true);
 addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
@@ -112,10 +125,9 @@ const createStatusButton = () => {
 const createDeleteButton = () => {
     const deleteButton = createElement('div');
     deleteButton.classList.add('deleteBook')
+    deleteButton.setAttribute('title', 'Delete Book');
     return deleteButton;
 }
-
-
 
 /* just for visual diffenence : random color */
 
@@ -183,10 +195,6 @@ const createSvgIcon = (design) => {
     return svgIcon;
 }
 
-function showMessage(message) {
-    return message;
-}
-
 function showDeleteMessage(book) {
     const message = createElement('div');
     const titleName = createText(`${book.title}`);
@@ -196,11 +204,10 @@ function showDeleteMessage(book) {
 
     titleContainer.classList.add('title-text');
     authorContainer.classList.add('author-text');
-    
+
     const messageContainer = createElement('div');
     const messageTextStart = createText(`by`);
     const messageTextEnd = createText(`was deleted`);
-    // messageText.classList.add('message-text');
 
     titleContainer.append(titleName);
     authorContainer.append(authorName);
@@ -210,10 +217,7 @@ function showDeleteMessage(book) {
     messageContainer.append(authorContainer);
     messageContainer.append(messageTextEnd);
 
-
-    // const messageText = createText(`[${book.title}] by {${book.author}} was deleted`);
     const bookIconContainer = createElement('div');
-
 
     message.classList.add('delete-message');
     message.append(messageContainer);
@@ -222,8 +226,6 @@ function showDeleteMessage(book) {
     message.insertBefore(bookIconContainer, messageContainer);
 
     document.body.insertBefore(message, bookShelf);
-
-    addBookForm.reset();
 
     setTimeout(() => {
         message.classList.add('fadeOut');
@@ -300,8 +302,18 @@ function createBook(book) {
     const statusButton = createStatusButton();
     const deleteButton = createDeleteButton();
 
-    const changeStatusIcon = createSvgIcon("M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z");
-    statusButton.append(changeStatusIcon);
+    const markUnreadIcon = createSvgIcon("M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M8.17,8.58L10.59,11L8.17,13.41L9.59,14.83L12,12.41L14.41,14.83L15.83,13.41L13.41,11L15.83,8.58L14.41,7.17L12,9.58L9.59,7.17L8.17,8.58Z");
+    const markReadIcon = createSvgIcon("M17,3A2,2 0 0,1 19,5V21L12,18L5,21V5C5,3.89 5.9,3 7,3H17M11,14L17.25,7.76L15.84,6.34L11,11.18L8.41,8.59L7,10L11,14Z");
+
+    if (book.read === true) {
+        statusButton.append(markUnreadIcon);
+        statusButton.setAttribute('title', 'Mark as Unread');
+        statusButton.classList.remove('mark-read');
+    } else {
+        statusButton.append(markReadIcon);
+        statusButton.setAttribute('title', 'Mark as Read');
+        statusButton.classList.add('mark-read');
+    }
 
     const deleteIcon = createSvgIcon("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
     deleteButton.append(deleteIcon);
@@ -309,17 +321,17 @@ function createBook(book) {
     deleteButton.addEventListener('click', () => {
 
         if (window.confirm("Are you sure you want to delete this book?")) {
-        const indexToRemove = myLibrary.findIndex((bookItem) => bookItem.id = book.id);
-        if (indexToRemove !== -1) {
-            myLibrary.splice(indexToRemove, 1);
-        }
-        
-        showMessage(showDeleteMessage(book));
-        bookEntry.remove();
+            const indexToRemove = myLibrary.findIndex((bookItem) => bookItem.id === book.id);
+            if (indexToRemove !== -1) {
+                myLibrary.splice(indexToRemove, 1);
+            }
+
+            showDeleteMessage(book);
+            bookEntry.remove();
         } else {
             console.log('Something here, but what?')
         }
-    })
+    });
 
     bookShelf.append(bookEntry);
     bookEntry.append(bookUI);
@@ -327,6 +339,32 @@ function createBook(book) {
     statusUI.append(readStatus);
     statusUI.append(statusButton);
     bookUI.append(deleteButton);
+
+    statusButton.addEventListener('click', () => {
+        book.toggleReadStatus();
+
+        if (book.read === true) {
+            markReadIcon.remove();
+            statusButton.append(markUnreadIcon);
+            readStatus.textContent = book.info();
+            readStatus.classList.add('completed');
+            statusButton.setAttribute('title', '');
+            statusButton.setAttribute('title', 'Mark as Unread');
+            statusButton.classList.remove('mark-read');
+            statusButton.classList.add('mark-unread');
+        } else {
+            markUnreadIcon.remove();
+            statusButton.append(markReadIcon);
+            readStatus.textContent = book.info();
+            readStatus.classList.remove('completed')
+            statusButton.setAttribute('title', '');
+            statusButton.setAttribute('title', 'Mark as Read');
+            statusButton.classList.remove('mark-unread');
+            statusButton.classList.add('mark-read');
+        }
+        console.log('and what?');
+        console.log(book.read);
+    });
 
     frame.append(picture);
     bookEntry.append(frame);
@@ -372,8 +410,6 @@ const addBookForm = document.querySelector('#add-book'); /* add book button insi
 addBookForm.addEventListener('submit', handleFormSubmit); /* important for learning */
 
 
-
-
 function handleFormSubmit(event) {
     event.preventDefault();
     console.log('Adding book...');
@@ -401,6 +437,5 @@ function handleFormSubmit(event) {
 
     dialog.close();
 
-    // showSuccessMessage();
-    showMessage(showSuccessMessage());
+    showSuccessMessage();
 }

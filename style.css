@@ -7,6 +7,29 @@
     --small-text: hsl(0, 0%, 44%);
     --success-color: hsl(164, 70%, 24%);
     --danger-color: hsl(352, 93%, 53%);
+
+    --shadow-color: 24deg 6% 58%;
+
+    --shadow-elevation-low:
+        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+        0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+        1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+
+    --shadow-elevation-medium:
+        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+        0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+        2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+        5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+
+    --shadow-elevation-high:
+        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+        1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+        2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+        4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+        7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+        11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+        17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+        25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 
 body {
@@ -15,7 +38,8 @@ body {
 }
 
 header {
-    position: sticky; /* later! */
+    position: sticky;
+    /* later! */
     background: var(--text-color);
     color: var(--bg-color);
     padding: 2rem;
@@ -91,7 +115,8 @@ button.new-book:hover {
 
 .book-entry {
     position: relative;
-    min-height: 576px; /* ? */
+    min-height: 576px;
+    /* ? */
     display: grid;
     grid-template-rows: 474px 1fr;
     /* not ideal */
@@ -113,26 +138,29 @@ button.new-book:hover {
     gap: .5rem
 }
 
-.deleteBook, .changeStatus {
+.deleteBook,
+.changeStatus {
     background-color: var(--bg-color);
     padding: .25rem;
     border: 1px solid var(--stroke-color);
     border-radius: 0.25rem;
 }
 
-.deleteBook > svg, .changeStatus > svg {
+.deleteBook>svg,
+.changeStatus>svg {
     width: 1.5rem;
     height: 1.5rem;
 }
 
-.deleteBook:hover , .changeStatus:hover {
+.deleteBook:hover,
+.changeStatus:hover {
     background: var(--danger-color);
     fill: var(--bg-color);
     border: var(--text-color);
+    box-shadow: var(--shadow-elevation-medium);
 }
 
 .book-entry .readStatus {
-    /* position: absolute; */
     padding: 0.25rem 0.5rem;
     border: 1px solid var(--stroke-color);
     border-radius: 0.25rem;
@@ -141,7 +169,6 @@ button.new-book:hover {
     display: flex;
     align-self: start;
     justify-self: center;
-    /* top: 1rem; */
 }
 
 .completed {
@@ -263,7 +290,7 @@ dialog form {
 }
 
 form label {
-        color: var(--small-text);
+    color: var(--small-text);
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
@@ -288,9 +315,9 @@ form div input {
     padding: .25rem .5rem;
 }
 
-form div > input[type="checkbox"] {
+form div>input[type="checkbox"] {
     accent-color: var(--text-color);
-    width: 1rem;    
+    width: 1rem;
 }
 
 form #add {
@@ -302,24 +329,27 @@ form #add {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
-.success-message, .delete-message {
+.success-message,
+.delete-message {
     background-color: var(--success-color);
     color: var(--bg-color);
     padding: 2rem;
@@ -364,6 +394,7 @@ form #add {
     mask-size: cover;
     -webkit-mask-size: cover;
     margin-bottom: .25rem;
+    
 }
 
 .success-message.fadeOut,
@@ -375,7 +406,7 @@ form #add {
     animation-fill-mode: backwards;
 }
 
-.delete-message > div {
+.delete-message>div {
     display: flex;
     gap: 1rem;
     align-items: baseline;
@@ -398,4 +429,14 @@ form #add {
     background-color: var(--text-color);
     padding: .25rem 1rem;
     border-radius: .25rem;
+}
+
+.mark-read:hover {
+    background-color: var(--success-color);
+    color: var(--bg-color);
+}
+
+.mark-unread:hover {
+    background: var(--danger-color);
+    color: var(--bg-color);
 }
