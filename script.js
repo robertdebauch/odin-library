@@ -43,9 +43,9 @@ function addBookToLibrary(id, genre, title, author, pages, read) {
 
 /* build few starters books */
 
-addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert Debauch', 200, true);
-addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
-addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Single Viewer', 400, false);
+// addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert Debauch', 200, true);
+// addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
+// addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Single Viewer', 400, false);
 
 
 /* elements in DOM */
@@ -63,6 +63,44 @@ function createBookEntry() {
     bookEntry.classList.add('book-entry');
     return bookEntry;
 }
+
+function createPlaceholder() {
+    const placeholder = createElement('div');
+    const placeholderText = createElement('div');
+    const placeholderHeading = createElement('h3');
+    const placeholderPara = createElement('p');
+    const placeholderImg = createElement('img');
+
+    const placeholderHeadingText = createText('Your Library is Empty');
+    const spanPlaceholder = createElement('span');
+    const placeholderParaStart = createText('Press ');
+    const spanPlaceholderText = 'New Book';
+    const placeholderParaEnd = createText('to start building your own library');
+
+    placeholder.classList.add('placeholder');
+    placeholderText.classList.add('placeholder-text');
+
+    placeholderHeading.append(placeholderHeadingText);
+    placeholderPara.append(placeholderParaStart);
+
+    spanPlaceholder.append(spanPlaceholderText);
+    spanPlaceholder.classList.add('span-button');
+
+    placeholderPara.append(spanPlaceholder);
+    placeholderPara.append(placeholderParaEnd);
+
+    placeholderImg.setAttribute('src', 'assets/sprite_fixed.png');
+    placeholderImg.classList.add('booksprite');
+    placeholderImg.setAttribute('alt', ' An image of the stack of books');
+
+    placeholder.append(placeholderImg);
+    placeholderText.append(placeholderHeading);
+    placeholderText.append(placeholderPara);
+    placeholder.append(placeholderText);
+
+    return placeholder;
+}
+
 
 const createAuthorElement = (author) => {
     const authorName = createText(author)
@@ -126,6 +164,7 @@ const createDeleteButton = () => {
     const deleteButton = createElement('div');
     deleteButton.classList.add('deleteBook')
     deleteButton.setAttribute('title', 'Delete Book');
+    deleteButton.setAttribute('aria-label', 'Delete Book');
     return deleteButton;
 }
 
@@ -195,10 +234,13 @@ const createSvgIcon = (design) => {
     return svgIcon;
 }
 
-function showDeleteMessage(book) {
+function showMessage(data, type_of_message, start_text, end_text) {
+    let success_message = 'success-message';
+    let delete_message = 'delete-message';
+
     const message = createElement('div');
-    const titleName = createText(`${book.title}`);
-    const authorName = createText(`${book.author}`);
+    const titleName = createText(`${data.title}`);
+    const authorName = createText(`${data.author}`);
     const titleContainer = createElement('div');
     const authorContainer = createElement('div');
 
@@ -206,8 +248,8 @@ function showDeleteMessage(book) {
     authorContainer.classList.add('author-text');
 
     const messageContainer = createElement('div');
-    const messageTextStart = createText(`by`);
-    const messageTextEnd = createText(`was deleted`);
+    const messageTextStart = createText(start_text);
+    const messageTextEnd = createText(end_text);
 
     titleContainer.append(titleName);
     authorContainer.append(authorName);
@@ -217,15 +259,24 @@ function showDeleteMessage(book) {
     messageContainer.append(authorContainer);
     messageContainer.append(messageTextEnd);
 
-    const bookIconContainer = createElement('div');
+    if (type_of_message === success_message) {
+        message.classList.add('success-message');
+        message.classList.remove('delete-message');
+    } else if (type_of_message === delete_message) {
+        message.classList.add('delete-message');
+        message.classList.remove('success-message');
+    }
 
-    message.classList.add('delete-message');
     message.append(messageContainer);
 
+    const bookIconContainer = createElement('div');
     bookIconContainer.classList.add('pseudo-icon');
     message.insertBefore(bookIconContainer, messageContainer);
-
     document.body.insertBefore(message, bookShelf);
+
+    if (type_of_message === 'success-message') {
+        addBookForm.reset();
+    }
 
     setTimeout(() => {
         message.classList.add('fadeOut');
@@ -237,43 +288,27 @@ function showDeleteMessage(book) {
         }, 300)
     }, 3000);
 }
-
-function showSuccessMessage() {
-
-    const message = createElement('div');
-    const messageText = createText('Your book was successfully added to the Library');
-    const bookIconContainer = createElement('div');
-
-
-    message.classList.add('success-message');
-    message.append(messageText);
-
-    bookIconContainer.classList.add('pseudo-icon');
-    message.insertBefore(bookIconContainer, messageText);
-
-    document.body.insertBefore(message, bookShelf);
-
-    addBookForm.reset();
-
-    setTimeout(() => {
-        message.classList.add('fadeOut');
-
-        setTimeout(() => {
-            if (message.parentNode) {
-                message.parentNode.removeChild(message);
-            }
-        }, 300)
-    }, 3000);
-
-    // it's jumps, i should revisit it.
-}
-
-/* main function here : */
 
 const bookShelf = document.querySelector(".bookshelf");
 
-function createBook(book) {
+const placeholder = createPlaceholder();
 
+function togglePlaceholder(array) {
+    if (array.length === 0) {
+        if (!placeholder.parentNode) {
+            document.body.insertBefore(placeholder, bookShelf);
+        }
+    } else {
+        if (placeholder.parentNode) {
+            placeholder.parentNode.removeChild(placeholder);
+        }
+    }
+}
+
+
+/* main function here : */
+
+function createBook(book) {
     console.log(book);
     const bookEntry = createBookEntry();
     bookEntry.setAttribute('data-id', book.id);
@@ -308,10 +343,12 @@ function createBook(book) {
     if (book.read === true) {
         statusButton.append(markUnreadIcon);
         statusButton.setAttribute('title', 'Mark as Unread');
+        statusButton.setAttribute('aria-label', 'Mark as Unread');
         statusButton.classList.remove('mark-read');
     } else {
         statusButton.append(markReadIcon);
         statusButton.setAttribute('title', 'Mark as Read');
+        statusButton.setAttribute('aria-label', 'Mark as Read');
         statusButton.classList.add('mark-read');
     }
 
@@ -326,14 +363,16 @@ function createBook(book) {
                 myLibrary.splice(indexToRemove, 1);
             }
 
-            showDeleteMessage(book);
+            showMessage(book, 'delete-message', 'by', 'was deleted');
             bookEntry.remove();
         } else {
             console.log('Something here, but what?')
         }
+
+        togglePlaceholder(myLibrary);
     });
 
-    bookShelf.append(bookEntry);
+    // bookShelf.append(bookEntry);
     bookEntry.append(bookUI);
     bookUI.append(statusUI);
     statusUI.append(readStatus);
@@ -362,8 +401,6 @@ function createBook(book) {
             statusButton.classList.remove('mark-unread');
             statusButton.classList.add('mark-read');
         }
-        console.log('and what?');
-        console.log(book.read);
     });
 
     frame.append(picture);
@@ -378,14 +415,18 @@ function createBook(book) {
     primaryInfo.append(author);
     secondaryInfo.append(genre);
     secondaryInfo.append(pages);
+
+    return bookEntry;
 };
 
 
 function showBooks(array) {
     const reversedList = array.toReversed();
     reversedList.forEach((book) => {
-        createBook(book);
+        const newBook = createBook(book);
+        bookShelf.append(newBook);
     });
+    togglePlaceholder(array);
 }
 
 /* adding some books at the start for visual clue */
@@ -425,17 +466,17 @@ function handleFormSubmit(event) {
     const newBookObject = Object.fromEntries(formData.entries());
 
     console.log(newBookObject);
-    console.log(title);
-    console.log(author);
-    console.log(genre);
-    console.log(pages);
-    console.log(read);
+    // console.log(title);
+    // console.log(author);
+    // console.log(genre);
+    // console.log(pages);
+    // console.log(read);
 
     addBookToLibrary(crypto.randomUUID(), genre, title, author, pages, read);
     bookShelf.innerHTML = ''; /* delete existing books to avoid duplicates */
     showBooks(myLibrary);
 
     dialog.close();
-
-    showSuccessMessage();
+    showMessage({ title, author }, 'success-message', 'by', 'was added')
 }
+
