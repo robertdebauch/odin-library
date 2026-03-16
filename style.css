@@ -32,28 +32,43 @@
         25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 
+html,
+body {
+    scrollbar-gutter: stable;
+}
+
 body {
     position: relative;
     font-family: "Karla", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
+
+/* .scroll-lock {
+    overflow: hidden;
+} */
 
 header {
     position: sticky;
+    top: 0;
+    z-index: 80;
     background: var(--text-color);
     color: var(--bg-color);
-    padding: 2rem;
-    /* width: 1440px; */
+    padding: clamp(1rem, 0.8rem + 1vw, 2rem);
 
     display: flex;
     justify-content: space-between;
     gap: 2rem;
+
+    box-shadow: var(--shadow-elevation-low);
 }
 
 header .logo {
-    font-size: 3rem;
     font-weight: 500;
     display: flex;
-    gap: .5rem;
+    gap: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
     flex: 0;
 }
 
@@ -64,15 +79,16 @@ h1 {
 
 .letters {
     justify-self: start;
-    font-size: 3rem;
+    font-size: 2rem;
+    font-size: clamp(2rem, 1.6rem + 2vw, 4rem);
     font-weight: 700;
     flex: 1;
-    letter-spacing: 4px;
+    letter-spacing: 0.25rem;
 }
 
-.logo .divider:nth-child(1) {
+.logo .divider:nth-child(5) {
     transform-origin: bottom;
-    /* transform: scaleY(60%) */
+    /* transform: rotate(-7deg) */
 }
 
 .logo .divider:nth-child(3) {
@@ -83,15 +99,16 @@ h1 {
 
 .divider {
     background-color: var(--bg-color);
-    width: 0.45rem;
+    width: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
 }
 
 button.new-book {
-    font-size: 1.5rem;
+    font-size: 0.75rem;
+    font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
     font-weight: 800;
     background-color: var(--text-color);
     color: var(--bg-color);
-    border: 0.45rem solid var(--bg-color);
+    border: 0.25rem solid var(--bg-color);
     flex: 1;
     max-width: 16rem;
 
@@ -106,14 +123,15 @@ button.new-book:hover {
 /* library style */
 
 .bookshelf {
-    padding: 2.25rem;
+    flex: 1;
+    padding: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
     display: grid;
-    gap: 4rem 2rem;
+    gap: clamp(2.5rem, 2.2rem + 1.5vw, 4rem) clamp(1rem, 0.8rem + 1vw, 2rem);
     grid-template-columns: repeat(auto-fill, minmax(316px, 1fr));
 }
 
 .placeholder {
-    margin: 2.25rem;
+    margin: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
     padding: 1.125rem;
     padding-bottom: 2.5rem;
     display: flex;
@@ -128,7 +146,8 @@ button.new-book:hover {
 @keyframes booksprite {
     from {
         object-position: 0% 0%;
-    } 
+    }
+
     to {
         object-position: 100% 0%;
     }
@@ -150,7 +169,8 @@ button.new-book:hover {
 }
 
 .placeholder h3 {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
+    font-size: clamp(1.75rem, 1.6rem + 0.75vw, 2.5rem);
 }
 
 .placeholder p {
@@ -168,10 +188,10 @@ button.new-book:hover {
 
 .book-entry {
     position: relative;
-    min-height: 576px;
-    /* ? */
+    min-height: clamp(24rem, 21.6rem + 12vw, 36rem);
     display: grid;
-    grid-template-rows: 474px 1fr;
+    
+    grid-template-rows: 474px 5rem;
     /* not ideal */
     gap: 1rem;
 }
@@ -179,7 +199,7 @@ button.new-book:hover {
 .book-ui {
     position: absolute;
     top: 1rem;
-    padding: 0 3rem 0 3rem;
+    padding: 0 clamp(2rem, 1.8rem + 1vw, 3rem) 0 clamp(2rem, 1.8rem + 1vw, 3rem);
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -240,7 +260,7 @@ button.new-book:hover {
     display: inline-block;
     width: 1rem;
     height: 1rem;
-    margin-top: 4px;
+    margin-top: .25rem;
     margin-right: .25rem;
     background: var(--success-color);
     mask: url('assets/check.svg') no-repeat center !important;
@@ -260,7 +280,7 @@ button.new-book:hover {
     display: inline-block;
     width: 1rem;
     height: 1rem;
-    margin-top: 4px;
+    margin-top: 0.25rem;
     margin-right: .25rem;
     background: #ffffff;
     mask: url('assets/check.svg') no-repeat center !important;
@@ -272,7 +292,7 @@ button.new-book:hover {
 
 .book-entry .frame {
     background-color: var(--frame-color);
-    border-radius: .5rem;
+    border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
     display: flex;
     padding: 4rem 3rem;
 }
@@ -294,10 +314,10 @@ button.new-book:hover {
 
 .secondary-info>* {
     color: var(--small-text);
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 4px;
+    letter-spacing: 0.25rem;
 }
 
 .secondary-info .pages {
@@ -357,10 +377,10 @@ dialog form {
 
 form label {
     color: var(--small-text);
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 0.125rem;
 }
 
 form div {
@@ -417,16 +437,16 @@ form #add {
 .success-message,
 .delete-message {
     color: var(--bg-color);
-    padding: 2rem;
-    margin: 2rem 2rem 0 2rem;
+    padding: clamp(1rem, 0.8rem + 1vw, 2rem);
+    margin: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
+    margin-bottom: 0;
 
-    font-size: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    gap: 1rem;
-    border-radius: 1rem;
+    gap: clamp(0.25rem, 0.1rem + 0.75vw, 1rem);
+    border-radius: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
 
     opacity: 0;
     animation-name: fadeIn;
@@ -475,51 +495,57 @@ form #add {
     animation-fill-mode: backwards;
 }
 
-.delete-message>div, .success-message>div {
+.delete-message>div,
+.success-message>div {
     display: flex;
-    gap: 1rem;
+    gap: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
+    font-size: 0.875rem;
+    font-size: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
     align-items: baseline;
 }
 
 .delete-message div {
-    font-size: 1rem;
     color: var(--text-color);
 }
 
 .success-message div {
-    font-size: 1rem;
     color: var(--bg-color);
 }
 
 .delete-message .title-text,
 .success-message .title-text {
-    font-size: 1.5rem;
+    font-size: 1rem;
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
     font-weight: 700;
 }
 
+.delete-message .author-text,
+.success-message .author-text {
+    font-size: 1rem;
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+    font-weight: 700;
+    padding: .25rem 1rem;
+    border-radius: clamp(0.125rem, 0.1rem + 0.125vw, 0.25rem);
+}
+
 .delete-message .author-text {
-    font-size: 1.5rem;
     color: var(--bg-color);
     background-color: var(--text-color);
     box-shadow: inset 1px 1px 8px rgba(255, 255, 255, 0.5);
-    padding: .25rem 1rem;
-    border-radius: .25rem;
 }
 
 .success-message .author-text {
-    font-size: 1.5rem;
     color: var(--success-color);
     background-color: var(--bg-color);
     box-shadow: inset 1px 1px 8px rgba(0, 0, 0, 0.5);
-    padding: .25rem 1rem;
-    border-radius: .25rem;
 }
 
-.title-text, .author-text {
+.title-text,
+.author-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 300px;
+    max-width: clamp(12rem, 10.4rem + 8vw, 20rem);
 }
 
 .mark-read:hover {
@@ -532,4 +558,111 @@ form #add {
     color: var(--bg-color);
 }
 
+/* footer */
+
+footer {
+    display: grid;
+
+    text-align: center;
+    grid-template-rows: 1fr;
+    background-color: var(--text-color);
+    height: clamp(4rem, 3.6rem + 2vw, 6rem);
+    align-items: center;
+    justify-items: center;
+    font-size: 0.75rem;
+    font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
+}
+
+footer div {
+    color: var(--bg-color);
+}
+
+footer div a {
+    color: var(--bg-color);
+}
+
+footer div a:hover {
+    color: var(--success-color)
+}
+
 /* */
+
+@media (max-width: 479px) {
+    .letters {
+        display: none !important;
+        visibility: hidden;
+    }
+
+    .bookshelf {
+        grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+    }
+
+    button.new-book {
+        max-width: 6rem;
+        border: 0.125rem solid var(--bg-color);
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+    }
+
+    .book-entry {
+        grid-template-rows: 388px 1fr;
+    }
+    
+    .book-entry  .bookinfo {
+        gap: 1rem;
+    }
+
+    .book-entry .frame {
+        padding: 4rem 2rem 2rem 2rem;
+    }
+
+    .bookinfo .primary-info {
+        gap: .5rem
+    }
+
+    .success-message,
+    .delete-message {
+        flex-direction: column;
+    }
+
+    .delete-message>div,
+    .success-message>div {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    dialog::backdrop {
+        opacity: .7;
+    }
+
+    .placeholder h3 {
+        line-height: 1.15;
+        text-align: center;
+    }
+
+    .placeholder div {
+        flex-flow: column nowrap;
+        gap: 1rem;
+    }
+
+    .placeholder p {
+        display: grid;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .placeholder p .span-button {
+        font-size: 1.25rem;
+        padding: .25rem 1rem;
+        text-align: center;
+    }
+
+    .booksprite {
+        width: 125px;
+        height: 125px;
+    }
+
+    footer {
+        padding: 0 2rem 0 2rem;;
+    }
+}

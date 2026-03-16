@@ -43,9 +43,9 @@ function addBookToLibrary(id, genre, title, author, pages, read) {
 
 /* build few starters books */
 
-// addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert Debauch', 200, true);
-// addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
-// addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Single Viewer', 400, false);
+addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert Debauch', 200, true);
+addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
+addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Single Viewer', 400, false);
 
 
 /* elements in DOM */
@@ -441,10 +441,13 @@ const closeButton = document.querySelector('#close>svg');
 
 newBookButton.addEventListener("click", () => {
     dialog.showModal();
+    /* doesn't work */
+    document.body.classList.add("scroll-lock");
 });
 
 closeButton.addEventListener("click", () => {
     dialog.close();
+    document.body.classList.remove("scroll-lock");
 })
 
 const addBookForm = document.querySelector('#add-book'); /* add book button inside form */
@@ -466,11 +469,6 @@ function handleFormSubmit(event) {
     const newBookObject = Object.fromEntries(formData.entries());
 
     console.log(newBookObject);
-    // console.log(title);
-    // console.log(author);
-    // console.log(genre);
-    // console.log(pages);
-    // console.log(read);
 
     addBookToLibrary(crypto.randomUUID(), genre, title, author, pages, read);
     bookShelf.innerHTML = ''; /* delete existing books to avoid duplicates */
@@ -480,3 +478,9 @@ function handleFormSubmit(event) {
     showMessage({ title, author }, 'success-message', 'by', 'was added')
 }
 
+const reference = document.querySelector('#reference');
+
+reference.addEventListener('mouseenter', function() {
+    const color = generateRandomColor();
+    appendRandomColor(color, reference);
+});
