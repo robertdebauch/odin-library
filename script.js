@@ -1,7 +1,5 @@
 const myLibrary = [];
 
-/* constructor */
-
 function Book(id, genre, title, author, pages, read) {
     if (!new.target) {
         throw Error("You must use the new operator to call the constructor");
@@ -14,8 +12,6 @@ function Book(id, genre, title, author, pages, read) {
     this.pages = pages;
     this.read = read;
 }
-
-/* method on prototype of Book */
 
 Book.prototype.info = function () {
     let readStatus;
@@ -31,10 +27,7 @@ Book.prototype.toggleReadStatus = function () {
     this.read = !this.read;
 }
 
-/* get random id */
-
 let id = crypto.randomUUID();
-
 
 function addBookToLibrary(id, genre, title, author, pages, read) {
     const book = new Book(id, genre, title, author, pages, read);
@@ -43,12 +36,10 @@ function addBookToLibrary(id, genre, title, author, pages, read) {
 
 /* build few starters books */
 
-addBookToLibrary(crypto.randomUUID(), 'media', 'The Eskimo and The Ice', 'Robert Debauch', 200, true);
-addBookToLibrary(crypto.randomUUID(), 'cookbook', 'How to Cook In the Wild', 'Wildy Bill', 200, false);
-addBookToLibrary(crypto.randomUUID(), 'guide', 'The Streets of Your Town', 'Single Viewer', 400, false);
+// addBookToLibrary(crypto.randomUUID(), 'media', 'Geschwindigkeitsbegrenzung, Flughafensicherheitskontrolle', 'Theo van Doesburg', 200, true);
+// addBookToLibrary(crypto.randomUUID(), 'cookbook', 'So Long, and Thanks for All the Fish (The Hitchhikers Guide to the Galaxy, #4)', 'Wildy Bill', 200, false);
+// addBookToLibrary(crypto.randomUUID(), 'guide', 'Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch', 'Hubert Blaine Wolfeschlegelsteinhausenbergerdorff Sr.', 400, false);
 
-
-/* elements in DOM */
 
 const createElement = (element) => {
     return document.createElement(element);
@@ -100,7 +91,6 @@ function createPlaceholder() {
 
     return placeholder;
 }
-
 
 const createAuthorElement = (author) => {
     const authorName = createText(author)
@@ -167,8 +157,6 @@ const createDeleteButton = () => {
     deleteButton.setAttribute('aria-label', 'Delete Book');
     return deleteButton;
 }
-
-/* just for visual diffenence : random color */
 
 function generateRandomColor() {
     const r = Math.floor(Math.random() * 255);
@@ -305,9 +293,6 @@ function togglePlaceholder(array) {
     }
 }
 
-
-/* main function here : */
-
 function createBook(book) {
     console.log(book);
     const bookEntry = createBookEntry();
@@ -372,7 +357,6 @@ function createBook(book) {
         togglePlaceholder(myLibrary);
     });
 
-    // bookShelf.append(bookEntry);
     bookEntry.append(bookUI);
     bookUI.append(statusUI);
     statusUI.append(readStatus);
@@ -429,29 +413,30 @@ function showBooks(array) {
     togglePlaceholder(array);
 }
 
-/* adding some books at the start for visual clue */
 showBooks(myLibrary);
-
-/* */
 
 const newBookButton = document.querySelector('.new-book');
 const dialog = document.querySelector("#dialog");
+
+dialog.addEventListener('close', () => {
+    addBookForm.reset();
+});
 
 const closeButton = document.querySelector('#close>svg');
 
 newBookButton.addEventListener("click", () => {
     dialog.showModal();
-    /* doesn't work */
-    document.body.classList.add("scroll-lock");
+    document.body.setAttribute('style', 'overflow: hidden');
 });
 
 closeButton.addEventListener("click", () => {
     dialog.close();
+    addBookForm.reset();
     document.body.classList.remove("scroll-lock");
 })
 
-const addBookForm = document.querySelector('#add-book'); /* add book button inside form */
-addBookForm.addEventListener('submit', handleFormSubmit); /* important for learning */
+const addBookForm = document.querySelector('#add-book');
+addBookForm.addEventListener('submit', handleFormSubmit); 
 
 
 function handleFormSubmit(event) {
@@ -471,7 +456,7 @@ function handleFormSubmit(event) {
     console.log(newBookObject);
 
     addBookToLibrary(crypto.randomUUID(), genre, title, author, pages, read);
-    bookShelf.innerHTML = ''; /* delete existing books to avoid duplicates */
+    bookShelf.innerHTML = ''; 
     showBooks(myLibrary);
 
     dialog.close();
@@ -483,4 +468,8 @@ const reference = document.querySelector('#reference');
 reference.addEventListener('mouseenter', function() {
     const color = generateRandomColor();
     appendRandomColor(color, reference);
+});
+
+reference.addEventListener('mouseleave', function() {
+    reference.style.backgroundColor = '';
 });

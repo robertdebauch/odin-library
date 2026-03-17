@@ -6,7 +6,9 @@
     --frame-color: hsl(24, 15%, 94%);
     --small-text: hsl(0, 0%, 44%);
     --success-color: hsl(164, 70%, 24%);
+    --success-color-bg: hsla(164, 70%, 24%, 0.1);
     --danger-color: hsl(352, 93%, 53%);
+    --danger-color-bg: hsla(352, 93%, 53%, 0.1);
 
     --shadow-color: 24deg 6% 58%;
 
@@ -32,10 +34,6 @@
         25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 
-html,
-body {
-    scrollbar-gutter: stable;
-}
 
 body {
     position: relative;
@@ -46,12 +44,9 @@ body {
     margin: 0;
 }
 
-/* .scroll-lock {
-    overflow: hidden;
-} */
-
 header {
     position: sticky;
+    width: 100%;
     top: 0;
     z-index: 80;
     background: var(--text-color);
@@ -78,8 +73,6 @@ h1 {
 }
 
 .letters {
-    justify-self: start;
-    font-size: 2rem;
     font-size: clamp(2rem, 1.6rem + 2vw, 4rem);
     font-weight: 700;
     flex: 1;
@@ -103,7 +96,6 @@ h1 {
 }
 
 button.new-book {
-    font-size: 0.75rem;
     font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
     font-weight: 800;
     background-color: var(--text-color);
@@ -143,6 +135,17 @@ button.new-book:hover {
     gap: 1rem;
 }
 
+@keyframes fadeInVariant {
+    0% {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes booksprite {
     from {
         object-position: 0% 0%;
@@ -169,7 +172,6 @@ button.new-book:hover {
 }
 
 .placeholder h3 {
-    font-size: 1.75rem;
     font-size: clamp(1.75rem, 1.6rem + 0.75vw, 2.5rem);
 }
 
@@ -188,12 +190,13 @@ button.new-book:hover {
 
 .book-entry {
     position: relative;
+    max-width: 100%;
     min-height: clamp(24rem, 21.6rem + 12vw, 36rem);
     display: grid;
-    
-    grid-template-rows: 474px 5rem;
-    /* not ideal */
+    align-items: start;
+    grid-template-rows: 474px 1fr;
     gap: 1rem;
+    animation: fadeInVariant 0.4s;
 }
 
 .book-ui {
@@ -249,13 +252,13 @@ button.new-book:hover {
     justify-self: center;
 }
 
-.completed {
+.readStatus.completed {
     --badge-text-color: var(--success-color);
     --stroke-color: var(--success-color);
-    border-radius: .5rem !important;
+    border-radius: .5rem;
 }
 
-.completed::before {
+.readStatus.completed::before {
     content: '';
     display: inline-block;
     width: 1rem;
@@ -263,19 +266,19 @@ button.new-book:hover {
     margin-top: .25rem;
     margin-right: .25rem;
     background: var(--success-color);
-    mask: url('assets/check.svg') no-repeat center !important;
-    -webkit-mask: url('assets/check.svg') no-repeat center !important;
+    mask: url('assets/check.svg') no-repeat center;
+    -webkit-mask: url('assets/check.svg') no-repeat center;
     mask-size: cover;
     -webkit-mask-size: cover;
 }
 
-.completed:hover {
+.readStatus.completed:hover {
     --bg-color: var(--success-color);
     --badge-text-color: #ffffff;
     background-color: var(--bg-color);
 }
 
-.completed:hover::before {
+.readStatus.completed:hover::before {
     content: '';
     display: inline-block;
     width: 1rem;
@@ -283,8 +286,8 @@ button.new-book:hover {
     margin-top: 0.25rem;
     margin-right: .25rem;
     background: #ffffff;
-    mask: url('assets/check.svg') no-repeat center !important;
-    -webkit-mask: url('assets/check.svg') no-repeat center !important;
+    mask: url('assets/check.svg') no-repeat center;
+    -webkit-mask: url('assets/check.svg') no-repeat center;
     mask-size: cover;
     -webkit-mask-size: cover;
 }
@@ -293,6 +296,7 @@ button.new-book:hover {
 .book-entry .frame {
     background-color: var(--frame-color);
     border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+    align-self: stretch;
     display: flex;
     padding: 4rem 3rem;
 }
@@ -303,12 +307,14 @@ button.new-book:hover {
 }
 
 .book-entry .bookinfo {
+    max-width: 100%;
     display: grid;
+    gap: clamp(0.5rem, 1.5rem - 1vw, 1rem);
 }
 
 .bookinfo .secondary-info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+    display: flex;
     justify-content: space-between;
 }
 
@@ -325,13 +331,18 @@ button.new-book:hover {
 }
 
 .bookinfo .primary-info {
-    display: grid;
-    align-content: space-between;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    word-break: break-word;
+    gap: .5rem;
 }
 
 .primary-info h3 {
     font-size: 1.25rem;
     font-weight: 800;
+    line-height: 1.25;
 }
 
 .primary-info p {
@@ -381,12 +392,12 @@ form label {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.125rem;
+    animation: fadeInVariant 0.2s;
 }
 
 form div {
     display: flex;
     flex-direction: column;
-    justify-items: start;
     gap: .25rem;
 }
 
@@ -401,6 +412,40 @@ form div input {
     padding: .25rem .5rem;
 }
 
+form div input:focus {
+    outline: none;
+    box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
+    background-color: var(--bg-color);
+}
+
+form div input:focus:user-invalid {
+    border: none;
+    outline: 2px solid var(--danger-color);
+    box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
+    background-color: var(--bg-color);
+}
+
+form div input:focus:valid {
+    border: none;
+    outline: 2px solid var(--success-color);
+    box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
+    background-color: var(--bg-color);
+}
+
+form div input:focus::placeholder {
+    color: transparent;
+}
+
+form div input:user-valid {
+    border: 1px solid var(--success-color);
+    background-color: var(--success-color-bg);
+}
+
+form div input:user-invalid {
+    border: 1px solid var(--danger-color);
+    background-color: var(--danger-color-bg);
+}
+
 form div>input[type="checkbox"] {
     accent-color: var(--text-color);
     width: 1rem;
@@ -412,6 +457,10 @@ form #add {
     color: var(--bg-color);
     border: none;
     padding: .5rem 1rem;
+}
+
+form #add:hover {
+    background-color: var(--success-color);
 }
 
 @keyframes fadeIn {
@@ -468,8 +517,8 @@ form #add {
     background-color: var(--bg-color);
     width: 2rem;
     height: 2rem;
-    mask: url('assets/book-open-variant.svg') no-repeat center !important;
-    -webkit-mask: url('assets/book-open-variant.svg') no-repeat center !important;
+    mask: url('assets/book-open-variant.svg') no-repeat center;
+    -webkit-mask: url('assets/book-open-variant.svg') no-repeat center;
     mask-size: cover;
     -webkit-mask-size: cover;
     margin-bottom: .25rem;
@@ -479,8 +528,8 @@ form #add {
     background-color: var(--text-color);
     width: 2rem;
     height: 2rem;
-    mask: url('assets/delete.svg') no-repeat center !important;
-    -webkit-mask: url('assets/delete.svg') no-repeat center !important;
+    mask: url('assets/delete.svg') no-repeat center;
+    -webkit-mask: url('assets/delete.svg') no-repeat center;
     mask-size: cover;
     -webkit-mask-size: cover;
     margin-bottom: .25rem;
@@ -499,7 +548,6 @@ form #add {
 .success-message>div {
     display: flex;
     gap: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
-    font-size: 0.875rem;
     font-size: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
     align-items: baseline;
 }
@@ -514,14 +562,12 @@ form #add {
 
 .delete-message .title-text,
 .success-message .title-text {
-    font-size: 1rem;
     font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
     font-weight: 700;
 }
 
 .delete-message .author-text,
 .success-message .author-text {
-    font-size: 1rem;
     font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
     font-weight: 700;
     padding: .25rem 1rem;
@@ -561,6 +607,7 @@ form #add {
 /* footer */
 
 footer {
+    margin-top: 4rem;
     display: grid;
 
     text-align: center;
@@ -569,7 +616,6 @@ footer {
     height: clamp(4rem, 3.6rem + 2vw, 6rem);
     align-items: center;
     justify-items: center;
-    font-size: 0.75rem;
     font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
 }
 
@@ -589,7 +635,7 @@ footer div a:hover {
 
 @media (max-width: 479px) {
     .letters {
-        display: none !important;
+        display: none;
         visibility: hidden;
     }
 
@@ -608,10 +654,6 @@ footer div a:hover {
         grid-template-rows: 388px 1fr;
     }
     
-    .book-entry  .bookinfo {
-        gap: 1rem;
-    }
-
     .book-entry .frame {
         padding: 4rem 2rem 2rem 2rem;
     }
@@ -641,12 +683,13 @@ footer div a:hover {
     }
 
     .placeholder div {
-        flex-flow: column nowrap;
+        flex-direction: column;
         gap: 1rem;
     }
 
     .placeholder p {
         display: grid;
+        text-align: center;
         justify-items: center;
         align-items: center;
     }
@@ -663,6 +706,6 @@ footer div a:hover {
     }
 
     footer {
-        padding: 0 2rem 0 2rem;;
+        padding: 0 2rem;
     }
 }
