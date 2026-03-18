@@ -420,6 +420,7 @@ const dialog = document.querySelector("#dialog");
 
 dialog.addEventListener('close', () => {
     addBookForm.reset();
+    document.body.setAttribute('style', '');
 });
 
 const closeButton = document.querySelector('#close>svg');
@@ -429,14 +430,21 @@ newBookButton.addEventListener("click", () => {
     document.body.setAttribute('style', 'overflow: hidden');
 });
 
+const placeholderButton = document.querySelector('.span-button');
+placeholderButton.addEventListener("click", () => {
+    dialog.showModal();
+    document.body.setAttribute('style', 'overflow: hidden');
+});
+
 closeButton.addEventListener("click", () => {
     dialog.close();
     addBookForm.reset();
-    document.body.classList.remove("scroll-lock");
-})
+    document.body.setAttribute('style', '');
+});
 
 const addBookForm = document.querySelector('#add-book');
 addBookForm.addEventListener('submit', handleFormSubmit); 
+
 
 
 function handleFormSubmit(event) {

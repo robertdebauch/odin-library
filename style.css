@@ -81,13 +81,11 @@ h1 {
 
 .logo .divider:nth-child(5) {
     transform-origin: bottom;
-    /* transform: rotate(-7deg) */
 }
 
 .logo .divider:nth-child(3) {
 
     transform-origin: bottom;
-    /* transform: scaleY(90%) */
 }
 
 .divider {
@@ -103,16 +101,9 @@ button.new-book {
     border: 0.25rem solid var(--bg-color);
     flex: 1;
     max-width: 16rem;
-
-    /* transition: all 0.3s ease-in; */
 }
 
-button.new-book:hover {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-}
 
-/* library style */
 
 .bookshelf {
     flex: 1;
@@ -140,6 +131,7 @@ button.new-book:hover {
         opacity: 0;
         transform: translateY(2rem);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -232,14 +224,6 @@ button.new-book:hover {
     pointer-events: none;
 }
 
-.deleteBook:hover,
-.changeStatus:hover {
-    background: var(--danger-color);
-    fill: var(--bg-color);
-    box-shadow: var(--shadow-elevation-low);
-    border-color: transparent;
-}
-
 
 .book-entry .readStatus {
     padding: 0.25rem 0.5rem;
@@ -266,26 +250,6 @@ button.new-book:hover {
     margin-top: .25rem;
     margin-right: .25rem;
     background: var(--success-color);
-    mask: url('assets/check.svg') no-repeat center;
-    -webkit-mask: url('assets/check.svg') no-repeat center;
-    mask-size: cover;
-    -webkit-mask-size: cover;
-}
-
-.readStatus.completed:hover {
-    --bg-color: var(--success-color);
-    --badge-text-color: #ffffff;
-    background-color: var(--bg-color);
-}
-
-.readStatus.completed:hover::before {
-    content: '';
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    margin-top: 0.25rem;
-    margin-right: .25rem;
-    background: #ffffff;
     mask: url('assets/check.svg') no-repeat center;
     -webkit-mask: url('assets/check.svg') no-repeat center;
     mask-size: cover;
@@ -459,9 +423,6 @@ form #add {
     padding: .5rem 1rem;
 }
 
-form #add:hover {
-    background-color: var(--success-color);
-}
 
 @keyframes fadeIn {
     from {
@@ -594,17 +555,6 @@ form #add:hover {
     max-width: clamp(12rem, 10.4rem + 8vw, 20rem);
 }
 
-.mark-read:hover {
-    background-color: var(--success-color);
-    color: var(--bg-color);
-}
-
-.mark-unread:hover {
-    background: var(--danger-color);
-    color: var(--bg-color);
-}
-
-/* footer */
 
 footer {
     margin-top: 4rem;
@@ -627,11 +577,6 @@ footer div a {
     color: var(--bg-color);
 }
 
-footer div a:hover {
-    color: var(--success-color)
-}
-
-/* */
 
 @media (max-width: 479px) {
     .letters {
@@ -653,7 +598,7 @@ footer div a:hover {
     .book-entry {
         grid-template-rows: 388px 1fr;
     }
-    
+
     .book-entry .frame {
         padding: 4rem 2rem 2rem 2rem;
     }
@@ -707,5 +652,58 @@ footer div a:hover {
 
     footer {
         padding: 0 2rem;
+    }
+}
+
+@media (hover: hover) {
+    button.new-book:hover {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+
+    .deleteBook:hover,
+    .changeStatus:hover {
+        background: var(--danger-color);
+        fill: var(--bg-color);
+        box-shadow: var(--shadow-elevation-low);
+        border-color: transparent;
+    }
+
+    .readStatus.completed:hover {
+        --bg-color: var(--success-color);
+        --badge-text-color: #ffffff;
+        background-color: var(--bg-color);
+    }
+
+    .readStatus.completed:hover::before {
+        content: '';
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        margin-top: 0.25rem;
+        margin-right: .25rem;
+        background: #ffffff;
+        mask: url('assets/check.svg') no-repeat center;
+        -webkit-mask: url('assets/check.svg') no-repeat center;
+        mask-size: cover;
+        -webkit-mask-size: cover;
+    }
+
+    form #add:hover {
+        background-color: var(--success-color);
+    }
+
+    .mark-read:hover {
+        background-color: var(--success-color);
+        color: var(--bg-color);
+    }
+
+    .mark-unread:hover {
+        background: var(--danger-color);
+        color: var(--bg-color);
+    }
+
+    footer div a:hover {
+        color: var(--success-color)
     }
 }
