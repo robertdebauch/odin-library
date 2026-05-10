@@ -6,6 +6,8 @@ In this project, the user can:
 - Delete an existing book.
 - Mark a book as read or unread.
 
+Update: **now with Classes**.
+
 The project uses:
 - Objects (constructor, instances, prototypes).
 - CSS Grid and Flexbox.
