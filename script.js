@@ -1,45 +1,87 @@
-const myLibrary = [];
+class Library {
+    #books;
 
-function Book(id, genre, title, author, pages, read) {
-    if (!new.target) {
-        throw Error("You must use the new operator to call the constructor");
+    constructor() {
+        this.#books = []; // the same as const myLibrary = [] i used before
     }
 
-    this.id = id;
-    this.genre = genre;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-Book.prototype.info = function () {
-    let readStatus;
-    if (this.read === true) {
-        readStatus = 'completed';
-    } else {
-        readStatus = 'not read yet';
+    add(book) {
+        this.#books.push(book);
     }
-    return readStatus;
+
+    remove(id) {
+        const indexToRemove = this.#books.findIndex(book => book.id === id);
+        if (indexToRemove !== -1) {
+            this.#books.splice(indexToRemove, 1);
+        }
+    }
+
+    getAll() {
+        return [...this.#books]; // copy my books to store them safely
+    }
+
+    get count() {
+        return this.#books.length;
+    }
 }
 
-Book.prototype.toggleReadStatus = function () {
-    this.read = !this.read;
+class Book {
+
+    #id;
+
+    constructor(id, genre, title, author, pages, read) {
+        this.#id = id;
+        this.genre = genre;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+
+    get id() {
+        return this.#id;
+    }
+
+    info() {
+        let readStatus;
+        if (this.read === true) {
+            readStatus = 'completed';
+        } else {
+            readStatus = 'not read yet';
+        }
+        return readStatus;
+    }
+
+    toggleReadStatus() {
+        this.read = !this.read;
+    }
+
+    static createFromFormData(formData) {
+
+        const id = crypto.randomUUID();
+        const genre = formData.get('genre');
+        const title = formData.get('title');
+        const author = formData.get('author');
+        const pages = parseInt(formData.get('pages'));
+        const read = !!formData.get('read');
+
+        return new Book(id, genre, title, author, pages, read);
+    }
 }
 
-let id = crypto.randomUUID();
-
-function addBookToLibrary(id, genre, title, author, pages, read) {
-    const book = new Book(id, genre, title, author, pages, read);
-    myLibrary.push(book);
-}
+const myLibrary = new Library();
 
 /* build few starters books */
 
-// addBookToLibrary(crypto.randomUUID(), 'media', 'Geschwindigkeitsbegrenzung, Flughafensicherheitskontrolle', 'Theo van Doesburg', 200, true);
-// addBookToLibrary(crypto.randomUUID(), 'cookbook', 'So Long, and Thanks for All the Fish (The Hitchhikers Guide to the Galaxy, #4)', 'Wildy Bill', 200, false);
-// addBookToLibrary(crypto.randomUUID(), 'guide', 'Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch', 'Hubert Blaine Wolfeschlegelsteinhausenbergerdorff Sr.', 400, false);
+const defaultBooks = [
+    new Book(crypto.randomUUID(), 'media', 'Geschwindigkeitsbegrenzung, Flughafensicherheitskontrolle', 'Theo van Doesburg', 200, true),
+    new Book(crypto.randomUUID(), 'cookbook', 'So Long, and Thanks for All the Fish (The Hitchhikers Guide to the Galaxy, #4)', 'Wildy Bill', 200, false),
+    new Book(crypto.randomUUID(), 'guide', 'Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch', 'Hubert Blaine Wolfeschlegelsteinhausenbergerdorff Sr.', 400, false),
+];
 
+defaultBooks.forEach(defaultBook => {
+    myLibrary.add(defaultBook);
+});
 
 const createElement = (element) => {
     return document.createElement(element);
@@ -281,8 +323,8 @@ const bookShelf = document.querySelector(".bookshelf");
 
 const placeholder = createPlaceholder();
 
-function togglePlaceholder(array) {
-    if (array.length === 0) {
+function togglePlaceholder() {
+    if (myLibrary.count === 0) {
         if (!placeholder.parentNode) {
             document.body.insertBefore(placeholder, bookShelf);
         }
@@ -294,7 +336,6 @@ function togglePlaceholder(array) {
 }
 
 function createBook(book) {
-    console.log(book);
     const bookEntry = createBookEntry();
     bookEntry.setAttribute('data-id', book.id);
 
@@ -343,18 +384,13 @@ function createBook(book) {
     deleteButton.addEventListener('click', () => {
 
         if (window.confirm("Are you sure you want to delete this book?")) {
-            const indexToRemove = myLibrary.findIndex((bookItem) => bookItem.id === book.id);
-            if (indexToRemove !== -1) {
-                myLibrary.splice(indexToRemove, 1);
-            }
+            myLibrary.remove(book.id);
 
             showMessage(book, 'delete-message', 'by', 'was deleted');
             bookEntry.remove();
-        } else {
-            console.log('Something here, but what?')
         }
 
-        togglePlaceholder(myLibrary);
+        togglePlaceholder();
     });
 
     bookEntry.append(bookUI);
@@ -404,16 +440,17 @@ function createBook(book) {
 };
 
 
-function showBooks(array) {
-    const reversedList = array.toReversed();
+function showBooks() {
+    const books = myLibrary.getAll();
+    const reversedList = books.toReversed();
     reversedList.forEach((book) => {
         const newBook = createBook(book);
         bookShelf.append(newBook);
     });
-    togglePlaceholder(array);
+    togglePlaceholder();
 }
 
-showBooks(myLibrary);
+showBooks();
 
 const newBookButton = document.querySelector('.new-book');
 const dialog = document.querySelector("#dialog");
@@ -431,10 +468,12 @@ newBookButton.addEventListener("click", () => {
 });
 
 const placeholderButton = document.querySelector('.span-button');
-placeholderButton.addEventListener("click", () => {
-    dialog.showModal();
-    document.body.setAttribute('style', 'overflow: hidden');
-});
+if (placeholderButton) {
+    placeholderButton.addEventListener("click", () => {
+        dialog.showModal();
+        document.body.setAttribute('style', 'overflow: hidden');
+    });
+}
 
 closeButton.addEventListener("click", () => {
     dialog.close();
@@ -443,7 +482,7 @@ closeButton.addEventListener("click", () => {
 });
 
 const addBookForm = document.querySelector('#add-book');
-addBookForm.addEventListener('submit', handleFormSubmit); 
+addBookForm.addEventListener('submit', handleFormSubmit);
 
 
 
@@ -453,31 +492,29 @@ function handleFormSubmit(event) {
 
     const formData = new FormData(event.target);
 
-    const genre = formData.get('genre');
-    const title = formData.get('title');
-    const author = formData.get('author');
-    const pages = parseInt(formData.get('pages'));
-    const read = !!formData.get('read');
 
-    const newBookObject = Object.fromEntries(formData.entries());
+    const newBook = Book.createFromFormData(formData);
+    myLibrary.add(newBook);
 
-    console.log(newBookObject);
-
-    addBookToLibrary(crypto.randomUUID(), genre, title, author, pages, read);
-    bookShelf.innerHTML = ''; 
-    showBooks(myLibrary);
+    bookShelf.innerHTML = '';
+    showBooks();
 
     dialog.close();
-    showMessage({ title, author }, 'success-message', 'by', 'was added')
+    showMessage({
+
+        title: newBook.title,
+        author: newBook.author,
+
+    }, 'success-message', 'by', 'was added')
 }
 
 const reference = document.querySelector('#reference');
 
-reference.addEventListener('mouseenter', function() {
+reference.addEventListener('mouseenter', function () {
     const color = generateRandomColor();
     appendRandomColor(color, reference);
 });
 
-reference.addEventListener('mouseleave', function() {
+reference.addEventListener('mouseleave', function () {
     reference.style.backgroundColor = '';
 });
