@@ -6,11 +6,9 @@ In this project, the user can:
 - Delete an existing book.
 - Mark a book as read or unread.
 
-Update: **now with Classes**.
+Update: **Now with localStorage**.
 
 The project uses:
 - Objects (constructor, instances, prototypes).
 - CSS Grid and Flexbox.
 - A function for generating a random cover color.
-
-The project does not store data about entered books between sessions. Each time the site is opened, the library must be rebuilt.
