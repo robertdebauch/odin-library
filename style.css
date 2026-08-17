@@ -1,709 +1,729 @@
 :root {
-    --bg-color: hsl(0, 0%, 100%);
-    --text-color: hsl(0, 0%, 0%);
-    --badge-text-color: hsl(0, 0%, 57%);
-    --stroke-color: hsl(0, 0%, 57%);
-    --frame-color: hsl(24, 15%, 94%);
-    --small-text: hsl(0, 0%, 44%);
-    --success-color: hsl(164, 70%, 24%);
-    --success-color-bg: hsla(164, 70%, 24%, 0.1);
-    --danger-color: hsl(352, 93%, 53%);
-    --danger-color-bg: hsla(352, 93%, 53%, 0.1);
+  --bg-color: hsl(0, 0%, 100%);
+  --text-color: hsl(0, 0%, 0%);
+  --badge-text-color: hsl(0, 0%, 57%);
+  --stroke-color: hsl(0, 0%, 57%);
+  --frame-color: hsl(24, 15%, 94%);
+  --small-text: hsl(0, 0%, 44%);
+  --success-color: hsl(164, 70%, 24%);
+  --success-color-bg: hsla(164, 70%, 24%, 0.1);
+  --danger-color: hsl(352, 93%, 53%);
+  --danger-color-bg: hsla(352, 93%, 53%, 0.1);
 
-    --shadow-color: 24deg 6% 58%;
+  --shadow-color: 24deg 6% 58%;
 
-    --shadow-elevation-low:
-        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
-        0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
-        1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
 
-    --shadow-elevation-medium:
-        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
-        0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
-        2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
-        5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-medium:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
 
-    --shadow-elevation-high:
-        0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
-        1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
-        2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
-        4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
-        7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
-        11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
-        17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
-        25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-high:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 
-
 body {
-    position: relative;
-    font-family: "Karla", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+  font-family:
+    'Karla',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
+  min-height: 100vh;
+}
+
+div#app {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
 header {
-    position: sticky;
-    width: 100%;
-    top: 0;
-    z-index: 80;
-    background: var(--text-color);
-    color: var(--bg-color);
-    padding: clamp(1rem, 0.8rem + 1vw, 2rem);
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 80;
+  background: var(--text-color);
+  color: var(--bg-color);
+  padding: clamp(1rem, 0.8rem + 1vw, 2rem);
 
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
 
-    box-shadow: var(--shadow-elevation-low);
+  box-shadow: var(--shadow-elevation-low);
 }
 
 header .logo {
-    font-weight: 500;
-    display: flex;
-    gap: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
-    flex: 0;
+  font-weight: 500;
+  display: flex;
+  gap: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  flex: 0;
 }
 
 h1 {
-    font-size: 3rem;
-    text-transform: uppercase;
+  font-size: 3rem;
+  text-transform: uppercase;
 }
 
 .letters {
-    font-size: clamp(2rem, 1.6rem + 2vw, 4rem);
-    font-weight: 700;
-    flex: 1;
-    letter-spacing: 0.25rem;
+  font-size: clamp(2rem, 1.6rem + 2vw, 4rem);
+  font-weight: 700;
+  flex: 1;
+  letter-spacing: 0.25rem;
 }
 
 .logo .divider:nth-child(5) {
-    transform-origin: bottom;
+  transform-origin: bottom;
 }
 
 .logo .divider:nth-child(3) {
-
-    transform-origin: bottom;
+  transform-origin: bottom;
 }
 
 .divider {
-    background-color: var(--bg-color);
-    width: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  background-color: var(--bg-color);
+  width: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
 }
 
 button.new-book {
-    font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
-    font-weight: 800;
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    border: 0.25rem solid var(--bg-color);
-    flex: 1;
-    max-width: 16rem;
+  font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
+  font-weight: 800;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: 0.25rem solid var(--bg-color);
+  flex: 1;
+  max-width: 16rem;
 }
 
-
-
 .bookshelf {
-    flex: 1;
-    padding: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
-    display: grid;
-    gap: clamp(2.5rem, 2.2rem + 1.5vw, 4rem) clamp(1rem, 0.8rem + 1vw, 2rem);
-    grid-template-columns: repeat(auto-fill, minmax(316px, 1fr));
+  flex: 1;
+  padding: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
+  display: grid;
+  gap: clamp(2.5rem, 2.2rem + 1.5vw, 4rem) clamp(1rem, 0.8rem + 1vw, 2rem);
+  grid-template-columns: repeat(auto-fill, minmax(316px, 1fr));
 }
 
 .placeholder {
-    margin: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
-    padding: 1.125rem;
-    padding-bottom: 2.5rem;
-    display: flex;
-    border: 1px solid var(--stroke-color);
-    background-color: var(--frame-color);
-    border-radius: 1rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  margin: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
+  padding: 1.125rem;
+  padding-bottom: 2.5rem;
+  display: flex;
+  border: 1px solid var(--stroke-color);
+  background-color: var(--frame-color);
+  border-radius: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 @keyframes fadeInVariant {
-    0% {
-        opacity: 0;
-        transform: translateY(2rem);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes booksprite {
-    from {
-        object-position: 0% 0%;
-    }
+  from {
+    object-position: 0% 0%;
+  }
 
-    to {
-        object-position: 100% 0%;
-    }
+  to {
+    object-position: 100% 0%;
+  }
 }
 
 .booksprite {
-    margin: 0 auto;
-    filter: grayscale() contrast(2);
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    animation: booksprite 1s steps(5, jump-end) forwards;
+  margin: 0 auto;
+  filter: grayscale() contrast(2);
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  animation: booksprite 1s steps(5, jump-end) forwards;
 }
 
 .placeholder div {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
 }
 
 .placeholder h3 {
-    font-size: clamp(1.75rem, 1.6rem + 0.75vw, 2.5rem);
+  font-size: clamp(1.75rem, 1.6rem + 0.75vw, 2.5rem);
 }
 
 .placeholder p {
-    display: flex;
-    gap: .5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .span-button {
-    font-family: monospace;
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    padding: .125rem .25rem;
-    border-radius: .25rem;
+  font-family: monospace;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
 }
 
 .book-entry {
-    position: relative;
-    max-width: 100%;
-    min-height: clamp(24rem, 21.6rem + 12vw, 36rem);
-    display: grid;
-    align-items: start;
-    grid-template-rows: 474px 1fr;
-    gap: 1rem;
-    animation: fadeInVariant 0.4s;
+  position: relative;
+  max-width: 100%;
+  min-height: clamp(24rem, 21.6rem + 12vw, 36rem);
+  display: grid;
+  align-items: start;
+  grid-template-rows: 474px 1fr;
+  gap: 1rem;
+  animation: fadeInVariant 0.4s;
 }
 
 .book-ui {
-    position: absolute;
-    top: 1rem;
-    padding: 0 clamp(2rem, 1.8rem + 1vw, 3rem) 0 clamp(2rem, 1.8rem + 1vw, 3rem);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  position: absolute;
+  top: 1rem;
+  padding: 0 clamp(2rem, 1.8rem + 1vw, 3rem) 0 clamp(2rem, 1.8rem + 1vw, 3rem);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .book-ui .status-ui {
-    display: flex;
-    gap: .5rem
+  display: flex;
+  gap: 0.5rem;
 }
 
 .deleteBook,
 .changeStatus {
-    background-color: var(--bg-color);
-    padding: .25rem;
-    border: 1px solid var(--stroke-color);
-    border-radius: 0.25rem;
+  background-color: var(--bg-color);
+  padding: 0.25rem;
+  border: 1px solid var(--stroke-color);
+  border-radius: 0.25rem;
 
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.deleteBook>svg,
-.changeStatus>svg {
-    width: 1.5rem;
-    height: 1.5rem;
+.deleteBook > svg,
+.changeStatus > svg {
+  width: 1.5rem;
+  height: 1.5rem;
 
-    pointer-events: none;
+  pointer-events: none;
 }
-
 
 .book-entry .readStatus {
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--stroke-color);
-    border-radius: 0.25rem;
-    background-color: var(--bg-color);
-    color: var(--badge-text-color);
-    display: flex;
-    align-self: start;
-    justify-self: center;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--stroke-color);
+  border-radius: 0.25rem;
+  background-color: var(--bg-color);
+  color: var(--badge-text-color);
+  display: flex;
+  align-self: start;
+  justify-self: center;
 }
 
 .readStatus.completed {
-    --badge-text-color: var(--success-color);
-    --stroke-color: var(--success-color);
-    border-radius: .5rem;
+  --badge-text-color: var(--success-color);
+  --stroke-color: var(--success-color);
+  border-radius: 0.5rem;
 }
 
 .readStatus.completed::before {
-    content: '';
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    margin-top: .25rem;
-    margin-right: .25rem;
-    background: var(--success-color);
-    mask: url('assets/check.svg') no-repeat center;
-    -webkit-mask: url('assets/check.svg') no-repeat center;
-    mask-size: cover;
-    -webkit-mask-size: cover;
+  content: '';
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.25rem;
+  margin-right: 0.25rem;
+  background: var(--success-color);
+  mask: url('assets/check.svg') no-repeat center;
+  -webkit-mask: url('assets/check.svg') no-repeat center;
+  mask-size: cover;
+  -webkit-mask-size: cover;
 }
 
-
 .book-entry .frame {
-    background-color: var(--frame-color);
-    border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
-    align-self: stretch;
-    display: flex;
-    padding: 4rem 3rem;
+  background-color: var(--frame-color);
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  align-self: stretch;
+  display: flex;
+  padding: 4rem 3rem;
 }
 
 .frame .picture {
-    background-color: hsla(220, 45%, 60%, 0.5);
-    flex: 1;
+  background-color: hsla(220, 45%, 60%, 0.5);
+  flex: 1;
 }
 
 .book-entry .bookinfo {
-    max-width: 100%;
-    display: grid;
-    gap: clamp(0.5rem, 1.5rem - 1vw, 1rem);
+  max-width: 100%;
+  display: grid;
+  gap: clamp(0.5rem, 1.5rem - 1vw, 1rem);
 }
 
 .bookinfo .secondary-info {
-    max-width: 100%;
-    display: flex;
-    justify-content: space-between;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.secondary-info>* {
-    color: var(--small-text);
-    font-size: 0.625rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.25rem;
+.secondary-info > * {
+  color: var(--small-text);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
 }
 
 .secondary-info .pages {
-    text-align: right;
+  text-align: right;
 }
 
 .bookinfo .primary-info {
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    word-break: break-word;
-    gap: .5rem;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  word-break: break-word;
+  gap: 0.5rem;
 }
 
 .primary-info h3 {
-    font-size: 1.25rem;
-    font-weight: 800;
-    line-height: 1.25;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.25;
 }
 
 .primary-info p {
-    color: var(--small-text);
-    font-size: 0.75rem;
+  color: var(--small-text);
+  font-size: 0.75rem;
 }
 
 .book-entry h3,
 .book-entry p,
 .book-entry .genre,
 .book-entry .pages {
-    overflow-wrap: break-word;
-    max-width: 100%;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 /* modal */
 
 dialog {
-    position: relative;
-    margin: auto auto;
-    width: 24rem;
+  position: relative;
+  margin: auto auto;
+  width: 24rem;
 }
 
 dialog::backdrop {
-    background-color: var(--text-color);
-    opacity: .4;
+  background-color: var(--text-color);
+  opacity: 0.4;
 }
 
 dialog #close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 #close svg {
-    width: 2rem;
+  width: 2rem;
 }
 
 dialog form {
-    display: grid;
-    gap: 1rem;
+  display: grid;
+  gap: 1rem;
 }
 
 form label {
-    color: var(--small-text);
-    font-size: 0.625rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.125rem;
-    animation: fadeInVariant 0.2s;
+  color: var(--small-text);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.125rem;
+  animation: fadeInVariant 0.2s;
 }
 
 form div {
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 form div:nth-child(6) {
-    flex-direction: row;
-    gap: .5rem;
+  flex-direction: row;
+  gap: 0.5rem;
 }
 
 form div input {
-    border: 1px solid var(--stroke-color);
-    border-radius: .25rem;
-    padding: .25rem .5rem;
+  border: 1px solid var(--stroke-color);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
 }
 
 form div input:focus {
-    outline: none;
-    box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
-    background-color: var(--bg-color);
+  outline: none;
+  box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
+  background-color: var(--bg-color);
 }
 
 form div input:focus:user-invalid {
-    border: none;
-    outline: 2px solid var(--danger-color);
-    box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
-    background-color: var(--bg-color);
+  border: none;
+  outline: 2px solid var(--danger-color);
+  box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
+  background-color: var(--bg-color);
 }
 
 form div input:focus:valid {
-    border: none;
-    outline: 2px solid var(--success-color);
-    box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
-    background-color: var(--bg-color);
+  border: none;
+  outline: 2px solid var(--success-color);
+  box-shadow: inset 1px 1px 8px 1px hsl(var(--shadow-color) / 0.34);
+  background-color: var(--bg-color);
 }
 
 form div input:focus::placeholder {
-    color: transparent;
+  color: transparent;
 }
 
-form div input:user-valid {
-    border: 1px solid var(--success-color);
-    background-color: var(--success-color-bg);
-}
-
-form div input:user-invalid {
-    border: 1px solid var(--danger-color);
-    background-color: var(--danger-color-bg);
-}
-
-form div>input[type="checkbox"] {
-    accent-color: var(--text-color);
-    width: 1rem;
+form div > input[type='checkbox'] {
+  accent-color: var(--text-color);
+  width: 1rem;
 }
 
 form #add {
-    font-size: 1.25rem;
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    border: none;
-    padding: .5rem 1rem;
+  font-size: 1.25rem;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 0.5rem 1rem;
 }
 
+.custom-error {
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.15s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.custom-error.error-text {
+  color: var(--danger-color);
+}
+
+.custom-error.success-text {
+  color: var(--success-color);
+}
+
+.input-success {
+  border: 1px solid var(--success-color);
+  background-color: var(--success-color-bg);
+}
+
+.input-error {
+  border: 1px solid var(--danger-color);
+  background-color: var(--danger-color-bg);
+}
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        opacity: 0;
-    }
+  to {
+    opacity: 0;
+  }
 }
 
 .success-message,
 .delete-message {
-    color: var(--bg-color);
-    padding: clamp(1rem, 0.8rem + 1vw, 2rem);
-    margin: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
-    margin-bottom: 0;
+  color: var(--bg-color);
+  padding: clamp(1rem, 0.8rem + 1vw, 2rem);
+  margin: clamp(1rem, 0.75rem + 1.25vw, 2.25rem);
+  margin-bottom: 0;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    gap: clamp(0.25rem, 0.1rem + 0.75vw, 1rem);
-    border-radius: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: clamp(0.25rem, 0.1rem + 0.75vw, 1rem);
+  border-radius: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
 
-    opacity: 0;
-    animation-name: fadeIn;
-    animation-duration: 0.3s;
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
+  opacity: 0;
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
 }
 
-
 .success-message {
-    background-color: var(--success-color);
+  background-color: var(--success-color);
 }
 
 .delete-message {
-    background-color: var(--danger-color);
+  background-color: var(--danger-color);
 }
 
 .success-message .pseudo-icon {
-    background-color: var(--bg-color);
-    width: 2rem;
-    height: 2rem;
-    mask: url('assets/book-open-variant.svg') no-repeat center;
-    -webkit-mask: url('assets/book-open-variant.svg') no-repeat center;
-    mask-size: cover;
-    -webkit-mask-size: cover;
-    margin-bottom: .25rem;
+  background-color: var(--bg-color);
+  width: 2rem;
+  height: 2rem;
+  mask: url('assets/book-open-variant.svg') no-repeat center;
+  -webkit-mask: url('assets/book-open-variant.svg') no-repeat center;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  margin-bottom: 0.25rem;
 }
 
 .delete-message .pseudo-icon {
-    background-color: var(--text-color);
-    width: 2rem;
-    height: 2rem;
-    mask: url('assets/delete.svg') no-repeat center;
-    -webkit-mask: url('assets/delete.svg') no-repeat center;
-    mask-size: cover;
-    -webkit-mask-size: cover;
-    margin-bottom: .25rem;
+  background-color: var(--text-color);
+  width: 2rem;
+  height: 2rem;
+  mask: url('assets/delete.svg') no-repeat center;
+  -webkit-mask: url('assets/delete.svg') no-repeat center;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  margin-bottom: 0.25rem;
 }
 
 .success-message.fadeOut,
 .delete-message.fadeOut {
-    opacity: 1;
-    animation-name: fadeOut;
-    animation-duration: 0.3s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: backwards;
+  opacity: 1;
+  animation-name: fadeOut;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: backwards;
 }
 
-.delete-message>div,
-.success-message>div {
-    display: flex;
-    gap: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
-    font-size: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
-    align-items: baseline;
+.delete-message > div,
+.success-message > div {
+  display: flex;
+  gap: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
+  font-size: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
+  align-items: baseline;
 }
 
 .delete-message div {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .success-message div {
-    color: var(--bg-color);
+  color: var(--bg-color);
 }
 
 .delete-message .title-text,
 .success-message .title-text {
-    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
-    font-weight: 700;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+  font-weight: 700;
 }
 
 .delete-message .author-text,
 .success-message .author-text {
-    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
-    font-weight: 700;
-    padding: .25rem 1rem;
-    border-radius: clamp(0.125rem, 0.1rem + 0.125vw, 0.25rem);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+  font-weight: 700;
+  padding: 0.25rem 1rem;
+  border-radius: clamp(0.125rem, 0.1rem + 0.125vw, 0.25rem);
 }
 
 .delete-message .author-text {
-    color: var(--bg-color);
-    background-color: var(--text-color);
-    box-shadow: inset 1px 1px 8px rgba(255, 255, 255, 0.5);
+  color: var(--bg-color);
+  background-color: var(--text-color);
+  box-shadow: inset 1px 1px 8px rgba(255, 255, 255, 0.5);
 }
 
 .success-message .author-text {
-    color: var(--success-color);
-    background-color: var(--bg-color);
-    box-shadow: inset 1px 1px 8px rgba(0, 0, 0, 0.5);
+  color: var(--success-color);
+  background-color: var(--bg-color);
+  box-shadow: inset 1px 1px 8px rgba(0, 0, 0, 0.5);
 }
 
 .title-text,
 .author-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: clamp(12rem, 10.4rem + 8vw, 20rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: clamp(12rem, 10.4rem + 8vw, 20rem);
 }
 
-
 footer {
-    margin-top: 4rem;
-    display: grid;
+  margin-top: 4rem;
+  display: grid;
 
-    text-align: center;
-    grid-template-rows: 1fr;
-    background-color: var(--text-color);
-    height: clamp(4rem, 3.6rem + 2vw, 6rem);
-    align-items: center;
-    justify-items: center;
-    font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
+  text-align: center;
+  grid-template-rows: 1fr;
+  background-color: var(--text-color);
+  height: clamp(4rem, 3.6rem + 2vw, 6rem);
+  align-items: center;
+  justify-items: center;
+  font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.5rem);
 }
 
 footer div {
-    color: var(--bg-color);
+  color: var(--bg-color);
 }
 
 footer div a {
-    color: var(--bg-color);
+  color: var(--bg-color);
 }
 
-
 @media (max-width: 479px) {
-    .letters {
-        display: none;
-        visibility: hidden;
-    }
+  .letters {
+    display: none;
+    visibility: hidden;
+  }
 
-    .bookshelf {
-        grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
-    }
+  .bookshelf {
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+  }
 
-    button.new-book {
-        max-width: 6rem;
-        border: 0.125rem solid var(--bg-color);
-        padding-top: .25rem;
-        padding-bottom: .25rem;
-    }
+  button.new-book {
+    max-width: 6rem;
+    border: 0.125rem solid var(--bg-color);
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
 
-    .book-entry {
-        grid-template-rows: 388px 1fr;
-    }
+  .book-entry {
+    grid-template-rows: 388px 1fr;
+  }
 
-    .book-entry .frame {
-        padding: 4rem 2rem 2rem 2rem;
-    }
+  .book-entry .frame {
+    padding: 4rem 2rem 2rem 2rem;
+  }
 
-    .bookinfo .primary-info {
-        gap: .5rem
-    }
+  .bookinfo .primary-info {
+    gap: 0.5rem;
+  }
 
-    .success-message,
-    .delete-message {
-        flex-direction: column;
-    }
+  .success-message,
+  .delete-message {
+    flex-direction: column;
+  }
 
-    .delete-message>div,
-    .success-message>div {
-        flex-direction: column;
-        align-items: center;
-    }
+  .delete-message > div,
+  .success-message > div {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    dialog::backdrop {
-        opacity: .7;
-    }
+  dialog::backdrop {
+    opacity: 0.7;
+  }
 
-    .placeholder h3 {
-        line-height: 1.15;
-        text-align: center;
-    }
+  .placeholder h3 {
+    line-height: 1.15;
+    text-align: center;
+  }
 
-    .placeholder div {
-        flex-direction: column;
-        gap: 1rem;
-    }
+  .placeholder div {
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-    .placeholder p {
-        display: grid;
-        text-align: center;
-        justify-items: center;
-        align-items: center;
-    }
+  .placeholder p {
+    display: grid;
+    text-align: center;
+    justify-items: center;
+    align-items: center;
+  }
 
-    .placeholder p .span-button {
-        font-size: 1.25rem;
-        padding: .25rem 1rem;
-        text-align: center;
-    }
+  .placeholder p .span-button {
+    font-size: 1.25rem;
+    padding: 0.25rem 1rem;
+    text-align: center;
+  }
 
-    .booksprite {
-        width: 125px;
-        height: 125px;
-    }
+  .booksprite {
+    width: 125px;
+    height: 125px;
+  }
 
-    footer {
-        padding: 0 2rem;
-    }
+  footer {
+    padding: 0 2rem;
+  }
 }
 
 @media (hover: hover) {
-    button.new-book:hover {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-    }
+  button.new-book:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
 
-    .deleteBook:hover,
-    .changeStatus:hover {
-        background: var(--danger-color);
-        fill: var(--bg-color);
-        box-shadow: var(--shadow-elevation-low);
-        border-color: transparent;
-    }
+  .deleteBook:hover,
+  .changeStatus:hover {
+    background: var(--danger-color);
+    fill: var(--bg-color);
+    box-shadow: var(--shadow-elevation-low);
+    border-color: transparent;
+  }
 
-    .readStatus.completed:hover {
-        --bg-color: var(--success-color);
-        --badge-text-color: #ffffff;
-        background-color: var(--bg-color);
-    }
+  .readStatus.completed:hover {
+    --bg-color: var(--success-color);
+    --badge-text-color: #ffffff;
+    background-color: var(--bg-color);
+  }
 
-    .readStatus.completed:hover::before {
-        content: '';
-        display: inline-block;
-        width: 1rem;
-        height: 1rem;
-        margin-top: 0.25rem;
-        margin-right: .25rem;
-        background: #ffffff;
-        mask: url('assets/check.svg') no-repeat center;
-        -webkit-mask: url('assets/check.svg') no-repeat center;
-        mask-size: cover;
-        -webkit-mask-size: cover;
-    }
+  .readStatus.completed:hover::before {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.25rem;
+    margin-right: 0.25rem;
+    background: #ffffff;
+    mask: url('assets/check.svg') no-repeat center;
+    -webkit-mask: url('assets/check.svg') no-repeat center;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+  }
 
-    form #add:hover {
-        background-color: var(--success-color);
-    }
+  form #add:hover {
+    background-color: var(--success-color);
+  }
 
-    .mark-read:hover {
-        background-color: var(--success-color);
-        color: var(--bg-color);
-    }
+  .mark-read:hover {
+    background-color: var(--success-color);
+    color: var(--bg-color);
+  }
 
-    .mark-unread:hover {
-        background: var(--danger-color);
-        color: var(--bg-color);
-    }
+  .mark-unread:hover {
+    background: var(--danger-color);
+    color: var(--bg-color);
+  }
 
-    footer div a:hover {
-        color: var(--success-color)
-    }
+  footer div a:hover {
+    color: var(--success-color);
+  }
 }

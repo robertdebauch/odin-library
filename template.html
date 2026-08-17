@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+<div id="app">
     <header>
         <div class="logo">
             <div class="divider"></div>
@@ -35,23 +35,28 @@
                     d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
             </svg>
         </div>
-        <form id="add-book" action="" method="dialog">
+        <form id="add-book" action="" method="dialog" novalidate>
             <h2>Enter the book details:</h2>
             <div>
                 <label for="title">Book Title</label>
                 <input type="text" name="title" id="title" placeholder="Entropy and Art" required>
+                <span class="custom-error" aria-live="polite"></span>
             </div>
             <div>
                 <label for="author">Book Author</label>
                 <input type="text" name="author" id="author" placeholder="Rudolf Arnheim" required>
+                <span class="custom-error" aria-live="polite"></span>
             </div>
             <div>
                 <label for="genre">Book Genre</label>
-                <input type="text" name="genre" id="genre" placeholder="Psychology" required>
+                <input type="text" name="genre" id="genre" list="genres-list" placeholder="Psychology" required>
+                <datalist id="genres-list"></datalist>
+                <span class="custom-error" aria-live="polite"></span>
             </div>
             <div>
                 <label for="pages">Number of Pages</label>
                 <input type="number" name="pages" id="pages" placeholder="320" required>
+                <span class="custom-error" aria-live="polite"></span>
             </div>
             <div>
                 <input type="checkbox" name="read" id="read">
@@ -67,7 +72,9 @@
     <footer>
         <div class="information">The project was completed as part of a course provided by <a id="reference" href="https://www.theodinproject.com/" target="_blank">The Odin Project</div>
     </footer>
+</div>
 </body>
-<script src="script.js"></script>
+<script type="module" src="main.js"></script>
+<!-- <script src="script.js"></script> -->
 
 </html>
