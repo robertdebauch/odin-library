@@ -94,7 +94,7 @@ export function pagesValidation(pages) {
 
 async function loadGenres() {
   try {
-    const response = await fetch('./assets/genres.json');
+    const response = await fetch('../assets/genres.json');
 
     if (!response.ok) {
       throw new Error(`Ошибка загрузки JSON-данных: ${response.status}`);

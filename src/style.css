@@ -261,8 +261,8 @@ button.new-book {
   margin-top: 0.25rem;
   margin-right: 0.25rem;
   background: var(--success-color);
-  mask: url('assets/check.svg') no-repeat center;
-  -webkit-mask: url('assets/check.svg') no-repeat center;
+  mask: url('../assets/check.svg') no-repeat center;
+  -webkit-mask: url('../assets/check.svg') no-repeat center;
   mask-size: cover;
   -webkit-mask-size: cover;
 }
@@ -500,8 +500,8 @@ form #add {
   background-color: var(--bg-color);
   width: 2rem;
   height: 2rem;
-  mask: url('assets/book-open-variant.svg') no-repeat center;
-  -webkit-mask: url('assets/book-open-variant.svg') no-repeat center;
+  mask: url('../assets/book-open-variant.svg') no-repeat center;
+  -webkit-mask: url('../assets/book-open-variant.svg') no-repeat center;
   mask-size: cover;
   -webkit-mask-size: cover;
   margin-bottom: 0.25rem;
@@ -511,8 +511,8 @@ form #add {
   background-color: var(--text-color);
   width: 2rem;
   height: 2rem;
-  mask: url('assets/delete.svg') no-repeat center;
-  -webkit-mask: url('assets/delete.svg') no-repeat center;
+  mask: url('../assets/delete.svg') no-repeat center;
+  -webkit-mask: url('../assets/delete.svg') no-repeat center;
   mask-size: cover;
   -webkit-mask-size: cover;
   margin-bottom: 0.25rem;
@@ -703,8 +703,8 @@ footer div a {
     margin-top: 0.25rem;
     margin-right: 0.25rem;
     background: #ffffff;
-    mask: url('assets/check.svg') no-repeat center;
-    -webkit-mask: url('assets/check.svg') no-repeat center;
+    mask: url('../assets/check.svg') no-repeat center;
+    -webkit-mask: url('../assets/check.svg') no-repeat center;
     mask-size: cover;
     -webkit-mask-size: cover;
   }

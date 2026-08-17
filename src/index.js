@@ -1,3 +1,6 @@
+import './style.css';
+import './reset.css';
+
 import { Library } from './library.js';
 import { Book } from './book.js';
 import {
@@ -39,9 +42,6 @@ const validators = {
   pages: pagesValidation,
 };
 
-/* build few starters books */
-
-// const defaultBooks = [
 //   new Book(
 //     crypto.randomUUID(),
 //     'media',
@@ -246,6 +246,19 @@ function updateFormUI(inputId, result) {
   }
 }
 
+function clearValidationUI() {
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach((input) => {
+    if (input.id) {
+      const errorSpan = input.closest('div').querySelector('.custom-error');
+      if (errorSpan) {
+        errorSpan.textContent = '';
+      }
+      input.classList.remove('input-error', 'input-success');
+    }
+  });
+}
+
 const addBookForm = document.querySelector('#add-book');
 addBookForm.addEventListener('submit', handleFormSubmit);
 
@@ -295,6 +308,7 @@ const reference = document.querySelector('#reference');
 
 dialog.addEventListener('close', () => {
   addBookForm.reset();
+  clearValidationUI();
   document.body.setAttribute('style', '');
 });
 
